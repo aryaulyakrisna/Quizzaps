@@ -3,14 +3,20 @@ $emote = "🔥";
 
 $nama = "Arya Ulya Krisna Musdatullah";
 $score = 90;
-// $npm = (int)htmlspecialchars($_POST['npm']);
-// $kelas = htmlspecialchars($_POST['kelas']);
-// $isFull = 0;
+$benar = 9;
+$salah = 1;
+$npm = (int)htmlspecialchars($_POST['npm']);
+$kelas = htmlspecialchars($_POST['kelas']);
+$isFull = 0;
 
 
-// if ($nama && $npm && $kelas && $score && is_string($nama) && is_int($npm) && is_string($kelas) && $is_int($score)){
-  //    $isFull = 1;
-  //   };
+if ($nama && $npm && $kelas && $score && $benar && $salah && is_string($nama) && is_int($npm) && is_string($kelas) && $is_int($score) && $is_int($benar) && $is_int($salah)){
+  $isFull = 1;
+} else {
+  header("Location: ./404.php");
+  exit();
+}
+
 if ($score <= 75) $emote = "😭";
 
 $title = "Quizzaps | Your Score!! $emote";
@@ -32,7 +38,7 @@ $flaticon = "flaticon.png";
   />
 
   <link rel="stylesheet" href="./output.css">
-	<!--===============================================================================================-->
+
   <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.4/dist/full.min.css" rel="stylesheet" type="text/css" />
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -68,7 +74,7 @@ $flaticon = "flaticon.png";
         }
       });
     });
-    // start observing
+
     intersectionObserver.observe(document.querySelector("main"));
   </script>
 </body>

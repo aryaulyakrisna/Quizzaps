@@ -1,4 +1,5 @@
 <?php
+$nama_kuis = htmlspecialchars($_GET["nama_kuis"]);
 $title = "Quizzaps | Form";
 $flaticon = "flaticon.png";
 $display = 0;
@@ -18,7 +19,7 @@ $display = 0;
   />
 
   <link rel="stylesheet" href="./output.css">
-	<!--===============================================================================================-->
+
   <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.4/dist/full.min.css" rel="stylesheet" type="text/css" />
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -29,20 +30,69 @@ $display = 0;
     <a href="./" class="text-nowrap"><span class="text-2xl text-[#6A75F1] mr-2">Quizzaps</span> by Kelompok 4</a>
   </header>
 
-  <main class="max-w-md w-full text-center flex-col justify-center mb-4 px-8 py-20 bg-[#6A75F1]/10 backdrop-blur-sm shadow-xl rounded-3xl mx-4">
+  <main class="max-w-md w-full text-center flex-col justify-center mb-4 px-8 py-10 bg-[#6A75F1]/10 backdrop-blur-sm shadow-xl rounded-3xl mx-4">
     <form action="./choose-your-quiz.php" method="post" class="w-full flex flex-col items-start gap-4">
+      <div id="steps" class="w-full flex flex-col items-start gap-4 hidden">
+        <span class="label-text ml-1">Nama:</span>
+        <input id="nama" type="text" class="input w-full" placeholder="Nama" name="nama">
+        
+        <span class="label-text ml-1">NPM:</span>
+        <input id="npm" type="number" class="input w-full [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" placeholder="NPM" name="npm">
+        
+        <span class="label-text ml-1">Kelas:</span>
+        <input id="kelas" type="text" class="input w-full" placeholder="Kelas" name="kelas">
+      </div>
 
-      <span class="label-text ml-1">Nama:</span>
-      <input id="nama" type="text" class="input w-full" placeholder="Nama" name="nama">
-      
-      <span class="label-text ml-1">NPM:</span>
-      <input id="npm" type="number" class="input w-full [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" placeholder="NPM" name="npm">
-      
-      <span class="label-text ml-1">Kelas:</span>
-      <input id="kelas" type="text" class="input w-full" placeholder="Kelas" name="kelas">
+      <div id="steps" class="w-full flex flex-col items-start gap-4 ">
+        <h1 class="rounded-lg bg-[#1D232A] w-full p-4 min-h-fit">Apa yang kamu tidak sukai dalam pemrograman?</h1>
 
+        <div
+          id="input-container"
+          class="w-full flex gap-4 p-4 rounded-lg bg-[#1D232A] hover:text-[#1D232A] hover:bg-[#6A75F1]"
+        >
+          <input
+            data-value=""
+            name=""
+            type="radio"
+            value=""
+            class="scale-0"
+          />
+          <span>P</span>
+        </div>
+
+        <div
+          id="input-container"
+          class="w-full flex gap-4 p-4 rounded-lg bg-[#1D232A] hover:text-[#1D232A] hover:bg-[#6A75F1]"
+        >
+          <input
+            data-value=""
+            name=""
+            type="radio"
+            value=""
+            class="scale-0"
+          />
+          <span>o</span>
+        </div>
+
+        <div
+          id="input-container"
+          class="w-full flex gap-4 p-4 rounded-lg bg-[#1D232A] hover:text-[#1D232A] hover:bg-[#6A75F1]"
+        >
+          <input
+            data-value=""
+            name=""
+            type="radio"
+            value=""
+            class="scale-0"
+          />
+          <span>h</span>
+        </div>
+      </div>
+
+      
       <div class="w-full mt-6">
-        <input id="btn-submit" type="submit" value="Start!" class="btn btn-primary font-bold tracking-wide px-8" disabled>
+        <button id="btn-prev" class="btn btn-primary font-bold tracking-wide w-[25%] mr-1">Prev</button>
+        <button id="btn-next" class="btn btn-primary font-bold tracking-wide w-[25%]" disabled>Next</button>
       </div>
     </form>
   </main>
@@ -55,20 +105,21 @@ $display = 0;
     document.getElementById("kelas").addEventListener("keyup", setSubmit);
 
     function setSubmit() {
-      const nama = document.getElementById("nama")?.value.replace(/<\s*script\s*>|<\/\s*script\s*>|<\?php|<\?|\?>|<\?=|javascript:|"|'|/gi, '');
+      const nama = document.getElementById("nama")?.value.replace(/<\s*script\s*>|<\/\s*script\s*>|<\?php|<\?|\?>|<\?=|javascript:|"|'|`|/gi, '');
       const npm = document.getElementById("npm")?.value.replace(/<\s*script\s*>|<\/\s*script\s*>|<\?php|<\?|\?>|<\?=|javascript:|"|/gi, '');
-      const kelas = document.getElementById("kelas")?.value.replace(/<\s*script\s*>|<\/\s*script\s*>|<\?php|<\?|\?>|<\?=|javascript:|"||'|\s/gi, '');
+      const kelas = document.getElementById("kelas")?.value.replace(/<\s*script\s*>|<\/\s*script\s*>|<\?php|<\?|\?>|<\?=|javascript:|"|'|`|\s/gi, '');
 
       document.getElementById("nama").value = nama;
       document.getElementById("npm").value = npm;
       document.getElementById("kelas").value = kelas;
 
-      if (nama && npm && kelas) {
-        document.getElementById("btn-submit").removeAttribute("disabled");
-      } else if (!document.getElementById("btn-submit").hasAttribute("disabled")) {
-        document.getElementById("btn-submit").setAttribute("disabled", "disabled");
+      if (nama && npm && kelas && document.getElementById("nama").value && document.getElementById("npm").value && document.getElementById("kelas").value) {
+        document.getElementById("btn-next").removeAttribute("disabled");
+      } else if (!document.getElementById("btn-next").hasAttribute("disabled")) {
+        document.getElementById("btn-next").setAttribute("disabled", "disabled");
       }
     }
+
   </script>
 </body>
 </html>
