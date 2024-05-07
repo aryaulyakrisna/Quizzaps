@@ -1,8 +1,8 @@
 <?php
+  session_start();
+
   $title = "Login";
   $flaticon = "../assets/icons/flaticon.png";
-
-  session_start();
 
 ?>
 

@@ -1,3 +1,4 @@
+
 <header class="px-20 h-[100px] flex fixed top-0 right-0 w-full justify-between items-center shadow-md z-1000">
     <div class="navbar bg-base-100">
       <div class="navbar-start">

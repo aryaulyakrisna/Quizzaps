@@ -7,9 +7,10 @@
   }
 
   $title = "Dashboard";
-  $flaticon = "../assets/iconsflaticon.png";
+  $flaticon = "../assets/icons/flaticon.png";
   $jumlahSoal = 0;
   $soalTerjawab = 0;
+  $username = $_SESSION["username"];
 
   try {
     include_once "../db/config.php";
@@ -53,7 +54,7 @@
   
   <main class="max-w-3xl w-full flex-col px-8 pt-48 mx-auto">
     <div class="w-full">
-      <div class="poppins-semibold  text-2xl mb-2">Hi! Arya Ulya Krisna 👋</div>
+      <div class="poppins-semibold  text-2xl mb-2">Hi! <?= $username ?> 👋</div>
       
       <div class="flex flex-col w-full mb-4">
         <div class="divider"></div>
