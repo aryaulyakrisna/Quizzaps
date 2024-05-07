@@ -16,12 +16,12 @@ $flaticon = "./assets/icons/flaticon.png";
     type="image/x-icon"
   />
 
-  <link rel="stylesheet" href="./output.css">
+  <link rel="stylesheet" href="../output.css">
 
   <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.4/dist/full.min.css" rel="stylesheet" type="text/css" />
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <script src="./js/style.js"></script>
+  <script src="../js/style.js"></script>
 
 </head>
 <body class="w-full min-h-screen flex justify-center items-center overflow-hidden poppins-regular">

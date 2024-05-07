@@ -1,26 +1,115 @@
 <?php
-$emote = "🔥";
+  include_once "db/config.php";
 
-$nama = "Arya Ulya Krisna Musdatullah";
-$score = 90;
-$benar = 9;
-$salah = 1;
-$npm = (int)htmlspecialchars($_POST['npm']);
-$kelas = htmlspecialchars($_POST['kelas']);
-$isFull = 0;
+  if (isset($_GET["quiz_id"])) {
+    if (is_int((int)$_GET["quiz_id"])) {
+      $quizID = (int)$_GET["quiz_id"];
+    }
+  } else {
+    header("Location: index.php");
+    exit;
+  }
+
+  $emote = "🔥";
+  $skor = 0;
+  $jawaban_benar = 0;
+  $jawaban_salah = 0;
+  
+  if (isset($_POST["nama"]) && isset($_POST["npm"]) && (int)$_POST["npm"] && isset($_POST["kelas"])) {
+    $nama = htmlspecialchars($_POST['nama']);
+    $npm = (int)$_POST['npm'];
+    $kelas = htmlspecialchars($_POST['kelas']);
+  }
+
+  else {
+    header("Location: index.php");
+    exit;
+  }
+
+  try {
+    $rowindex = 0;
+    $query = "SELECT jawaban_benar from tb_soal_" . $quizID;
+    $sql = mysqli_query($conn, $query) or die(mysqli_error($conn));
+  } 
+  
+  catch (Exception $e) {
+    // echo "Error : " . $e->getMessage();
+    header("Location: ./404.php");
+    exit;
+  }
+  
+  while ($row = mysqli_fetch_assoc($sql)) {
+    $rowindex++;
+    if ($row["jawaban_benar"] == $_POST["jawaban" . $rowindex]) { // jika jawaban user sama dengan jawaban benar maka variabel $benar ditambah 1
+      $jawaban_benar++;
+    } else {
+      $jawaban_salah++;
+    }
+  }
+  
+  $skor = round(($jawaban_benar/$rowindex) * 100);
+  
+  if (!($nama && $npm && $kelas && $skor >= 0 && $jawaban_benar >= 0 && $jawaban_salah >= 0)){
+    header("Location: 404.php");
+    exit;
+  }
+  if ($skor <= 75) $emote = "😭";
+
+  $title = "Quizzaps | Your skor!! $emote";
+  $flaticon = "./assets/icons/flaticon.png";
+
+  
+  try {
+    $query = "INSERT INTO tb_hasil_" . $quizID . "(npm, nama, kelas, jawaban_benar, jawaban_salah, skor) VALUES (?, ?, ?, ?, ?, ?)";
+
+    $stmt = mysqli_prepare($conn, $query);
+
+    if (!$stmt) {
+        throw new Exception(mysqli_error($conn));
+    }
+
+    mysqli_stmt_bind_param($stmt, "sssiii", $npm, $nama, $kelas, $jawaban_benar, $jawaban_salah, $skor);
+
+    if (!mysqli_stmt_execute($stmt)) {
+        throw new Exception(mysqli_stmt_error($stmt));
+    }
+
+    mysqli_stmt_close($stmt);
+
+  } 
+
+  catch (Exception $e) {
+    // echo "Error : " . $e->getMessage();
+
+    header("Location: 404.php");
+    exit;
+  }
 
 
-if ($nama && $npm && $kelas && $score && $benar && $salah && is_string($nama) && is_int($npm) && is_string($kelas) && $is_int($score) && $is_int($benar) && $is_int($salah)){
-  $isFull = 1;
-} else {
-  header("Location: ./404.php");
-  exit();
-}
+  try {      
+      $query = "UPDATE tb_daftar_kuis SET jumlah_hasil = jumlah_hasil + 1 WHERE quiz_id = ?";
 
-if ($score <= 75) $emote = "😭";
+      $stmt = mysqli_prepare($conn, $query);
 
-$title = "Quizzaps | Your Score!! $emote";
-$flaticon = "flaticon.png";
+      if (!$stmt) {
+          throw new Exception(mysqli_error($conn));
+      }
+
+      mysqli_stmt_bind_param($stmt, "i", $quizID); 
+
+      if (!mysqli_stmt_execute($stmt)) {
+          throw new Exception(mysqli_stmt_error($stmt));
+      }
+
+      mysqli_stmt_close($stmt);
+
+  } catch (Exception $e) {
+      // echo "Error: " . $e->getMessage();
+
+      header("Location: 404.php");
+      exit;
+  }
+
   
 ?>
 
@@ -33,7 +122,7 @@ $flaticon = "flaticon.png";
 
   <link
     rel="icon"
-    href="./assets/icons/<?= $flaticon ?>"
+    href="<?= $flaticon ?>"
     type="image/x-icon"
   />
 
@@ -42,40 +131,33 @@ $flaticon = "flaticon.png";
   <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.4/dist/full.min.css" rel="stylesheet" type="text/css" />
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <script src="./js/style.js"></script>
+
 </head>
 <body class="w-full min-h-screen flex justify-center items-center">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="fixed max-md:bottom-0 -bottom-[20%]"><path fill="#6A75F1" fill-opacity="1" d="M0,96L34.3,96C68.6,96,137,96,206,85.3C274.3,75,343,53,411,37.3C480,21,549,11,617,37.3C685.7,64,754,128,823,138.7C891.4,149,960,107,1029,85.3C1097.1,64,1166,64,1234,69.3C1302.9,75,1371,85,1406,90.7L1440,96L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z"></path></svg>
   <header class="px-20 h-[100px] flex fixed top-0 w-full justify-between items-center">
-    <a href="./" class="text-nowrap"><span class="text-2xl text-[#6A75F1] mr-2">Quizzaps</span> by Kelompok 4</a>
+    <a href="./" class="text-nowrap"><span class="text-2xl text-[#6A75F1] mr-2 poppins-bold tracking-wide">Quizzaps</span> by Kelompok 4</a>
   </header>
 
   <main class="relative max-w-md w-full text-center flex-col justify-center mb-4 px-8 py-10 bg-[#6A75F1]/10 backdrop-blur-sm shadow-xl rounded-3xl mx-4 scale-0 transition-all duration-500">
     <div class="absolute -top-6 right-0 w-full flex justify-center">
-      <div class="h-12 px-6 w-[75%] bg-[#6A75F1] text-[#1D232A] poppins-semibold text-xl text-nowrap overflow-hidden flex items-center justify-center rounded-full text-center">Your Score!!&#160;<?= $emote ?></div>
+      <div class="h-12 px-6 w-[75%] bg-[#6A75F1] text-[#1D232A] poppins-semibold text-xl glass text-nowrap overflow-hidden flex items-center justify-center rounded-full text-center">Your skor!!&#160;<?= $emote ?></div>
     </div>
     <div class="flex w-full justify-center my-10">
-      <div class="h-screen w-full max-h-[220px] max-w-[220px] rounded-full border-[16px] border-[#6A75F1] flex justify-center items-center shadow-lg">
-        <span class="text-5xl poppins-bold">334</span>
+      <div class="w-full rounded-full max-w-[220px] max-h-[220px] h-screen  p-[16px] bg-[#6A75F1] shadow-lg glass">
+        <span class="text-5xl poppins-bold rounded-full bg-[#1D232A] w-full h-full flex justify-center items-center"><?= $skor ?></span>
       </div>
     </div>
     <div class="flex w-full">
-      <div class="grid h-20 flex-grow card bg-base-300 rounded-box place-items-center"><span class="text-green-500 poppins-bold text-xl">45</span></div>
+      <div class="grid h-20 flex-grow card bg-base-300 rounded-box place-items-center"><span class="text-green-500 poppins-bold text-xl"><?= $jawaban_benar ?></span></div>
       <div class="divider divider-horizontal"></div>
-      <div class="grid h-20 flex-grow card bg-base-300 rounded-box place-items-center"><span class="text-red-500 poppins-bold text-xl">5</span></div>
+      <div class="grid h-20 flex-grow card bg-base-300 rounded-box place-items-center"><span class="text-red-500 poppins-bold text-xl"><?= $jawaban_salah ?></span></div>
     </div>
   </main>
 
   <script>
-
-    const intersectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if(entry.isIntersecting) {
-          document.querySelector("main").classList.remove("scale-0");
-        }
-      });
-    });
-
-    intersectionObserver.observe(document.querySelector("main"));
+    setIntersection();
   </script>
 </body>
 </html>
