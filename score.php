@@ -14,6 +14,9 @@
   $skor = 0;
   $jawaban_benar = 0;
   $jawaban_salah = 0;
+
+  $title = "Quizzaps | Your skor!! $emote";
+  $flaticon = "./assets/icons/flaticon.png";
   
   if (isset($_POST["nama"]) && isset($_POST["npm"]) && (int)$_POST["npm"] && isset($_POST["kelas"])) {
     $nama = htmlspecialchars($_POST['nama']);
@@ -27,90 +30,51 @@
   }
 
   try {
+    include_once "./db/config.php";
+
     $rowindex = 0;
     $query = "SELECT jawaban_benar from tb_soal_" . $quizID;
     $sql = mysqli_query($conn, $query) or die(mysqli_error($conn));
+
+    while ($row = mysqli_fetch_assoc($sql)) {
+      $rowindex++;
+      if ($row["jawaban_benar"] == $_POST["jawaban" . $rowindex]) {
+          $jawaban_benar++;
+      } else {
+          $jawaban_salah++;
+      }
+    }
+
+    $skor = round(($jawaban_benar / $rowindex) * 100);
+
+    if (!($nama && $npm && $kelas && $skor >= 0 && $jawaban_benar >= 0 && $jawaban_salah >= 0)) {
+      throw new Exception("Invalid data or calculation error");
+    }
+
+    if ($skor <= 75) {
+        $emote = "😭";
+    }
+
+    $queryInsert = "INSERT INTO tb_hasil_" . $quizID . "(npm, nama, kelas, jawaban_benar, jawaban_salah, skor) VALUES (?, ?, ?, ?, ?, ?)";
+    $stmtInsert = mysqli_prepare($conn, $queryInsert);
+    mysqli_stmt_bind_param($stmtInsert, "sssiii", $npm, $nama, $kelas, $jawaban_benar, $jawaban_salah, $skor);
+    mysqli_stmt_execute($stmtInsert);
+    mysqli_stmt_close($stmtInsert);
+
+    $queryUpdate = "UPDATE tb_daftar_kuis SET jumlah_hasil = jumlah_hasil + 1 WHERE quiz_id = ?";
+    $stmtUpdate = mysqli_prepare($conn, $queryUpdate);
+    mysqli_stmt_bind_param($stmtUpdate, "i", $quizID);
+    mysqli_stmt_execute($stmtUpdate);
+    mysqli_stmt_close($stmtUpdate);
+
+    mysqli_close($conn);
   } 
-  
+    
   catch (Exception $e) {
-    // echo "Error : " . $e->getMessage();
-    header("Location: ./404.php");
-    exit;
-  }
-  
-  while ($row = mysqli_fetch_assoc($sql)) {
-    $rowindex++;
-    if ($row["jawaban_benar"] == $_POST["jawaban" . $rowindex]) { // jika jawaban user sama dengan jawaban benar maka variabel $benar ditambah 1
-      $jawaban_benar++;
-    } else {
-      $jawaban_salah++;
-    }
-  }
-  
-  $skor = round(($jawaban_benar/$rowindex) * 100);
-  
-  if (!($nama && $npm && $kelas && $skor >= 0 && $jawaban_benar >= 0 && $jawaban_salah >= 0)){
-    header("Location: 404.php");
-    exit;
-  }
-  if ($skor <= 75) $emote = "😭";
-
-  $title = "Quizzaps | Your skor!! $emote";
-  $flaticon = "./assets/icons/flaticon.png";
-
-  
-  try {
-    $query = "INSERT INTO tb_hasil_" . $quizID . "(npm, nama, kelas, jawaban_benar, jawaban_salah, skor) VALUES (?, ?, ?, ?, ?, ?)";
-
-    $stmt = mysqli_prepare($conn, $query);
-
-    if (!$stmt) {
-        throw new Exception(mysqli_error($conn));
-    }
-
-    mysqli_stmt_bind_param($stmt, "sssiii", $npm, $nama, $kelas, $jawaban_benar, $jawaban_salah, $skor);
-
-    if (!mysqli_stmt_execute($stmt)) {
-        throw new Exception(mysqli_stmt_error($stmt));
-    }
-
-    mysqli_stmt_close($stmt);
-
-  } 
-
-  catch (Exception $e) {
-    // echo "Error : " . $e->getMessage();
 
     header("Location: 404.php");
     exit;
-  }
-
-
-  try {      
-      $query = "UPDATE tb_daftar_kuis SET jumlah_hasil = jumlah_hasil + 1 WHERE quiz_id = ?";
-
-      $stmt = mysqli_prepare($conn, $query);
-
-      if (!$stmt) {
-          throw new Exception(mysqli_error($conn));
-      }
-
-      mysqli_stmt_bind_param($stmt, "i", $quizID); 
-
-      if (!mysqli_stmt_execute($stmt)) {
-          throw new Exception(mysqli_stmt_error($stmt));
-      }
-
-      mysqli_stmt_close($stmt);
-
-  } catch (Exception $e) {
-      // echo "Error: " . $e->getMessage();
-
-      header("Location: 404.php");
-      exit;
-  }
-
-  
+  }  
 ?>
 
 <!DOCTYPE html>

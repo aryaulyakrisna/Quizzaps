@@ -29,13 +29,13 @@
     include_once "../db/config.php";
     $query = "SELECT * from tb_hasil_" . $quizID;
     $sql = mysqli_query($conn, $query) or die(mysqli_error($conn));
+    mysqli_close($conn);
   } 
 
   catch (Exception $e) {
     header("Location: 404.php");
     exit;
   }
-
 ?>
 
 <!DOCTYPE html>
@@ -58,20 +58,21 @@
 </head>
 <body class="w-full min-h-screen overflow-hidden">
   
-  <main class="max-w-5xl w-full flex flex-col gap-2 px-8 pt-36 mx-auto">
+  <main class="max-w-6xl w-full flex flex-col gap-2 px-8 pt-36 mx-auto">
 
     <div class="overflow-x-auto h-[500px] no-scrollbar">
       <table class="table">
         <!-- head -->
-        <thead class="h-20 sticky top-0 bg-[#1D232A]">
+        <thead class="h-20 sticky top-0 bg-[#1D232A] shadow-md">
           <tr>
-            <th>No</th>
+            <th></th>
             <th>Nama</th>
             <th>NPM</th>
             <th>Kelas</th>
             <th>Benar</th>
             <th>Salah</th>
             <th>Skor</th>
+            <th>Hapus</th>
           </tr>
         </thead>
         <tbody>
@@ -80,7 +81,7 @@
           while ($row = mysqli_fetch_assoc($sql)) { 
             $rowIndex++;
           ?>
-            <tr class="hover">
+            <tr class="hover ">
               <th><?= $rowIndex ?></th>
               <td><?= $row["nama"]?></td>
               <td><?= $row["npm"]?></td>
@@ -88,6 +89,9 @@
               <td><?= $row["jawaban_salah"]?></td>
               <td><?= $row["jawaban_benar"]?></td>
               <td><?= $row["skor"]?></td>
+              <td><a href="./delete-user-result.php?quiz_id=<?= $quizID ?>&id=<?= $row["id"] ?>" class="btn btn-active btn-ghost">
+                Hapus
+              </a></td>
             </tr>
           <?php } ?>
         </tbody>

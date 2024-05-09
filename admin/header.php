@@ -1,5 +1,5 @@
 
-<header class="px-20 h-[100px] flex fixed top-0 right-0 w-full justify-between items-center shadow-md z-1000">
+<header class="px-20 h-[100px] flex fixed top-0 right-0 w-full justify-between items-center shadow-md z-1000 bg-[#1D232A]">
     <div class="navbar bg-base-100">
       <div class="navbar-start">
         <div class="drawer">
@@ -18,17 +18,17 @@
               </a></li>
               <div class="divider"></div>
               <li><a href="quizes.php" class="btn btn-ghost poppins-semibold tracking-wide mb-4">Daftar Quiz</a></li>
-              <li><a href="user-results.php" class="btn btn-ghost poppins-semibold tracking-wide ">Hasil Quiz</a></li>
+              <li><a href="quiz-results.php" class="btn btn-ghost poppins-semibold tracking-wide ">Hasil Quiz</a></li>
 
             </ul>
           </div>
         </div>
       </div>
       <div class="navbar-center">
-        <a class="text-xl">Quizzaps</a>
+        <a class="text-xl poppins-bold tracking-wide">Quizzaps</a>
       </div>
       <div class="navbar-end">
-        <button class="btn" onclick="my_modal_5.showModal()">Logout</button>
+        <button class="btn poppins-semibold tracking-wide" onclick="my_modal_5.showModal()">Logout</button>
         <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
           <div class="modal-box p-10">
             <h3 class="poppins-bold text-xl">Logout!</h3>

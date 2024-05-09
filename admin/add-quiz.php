@@ -1,48 +1,27 @@
 <?php
   session_start();
 
-  if (!$_SESSION["username"] && !$_SESSION["user_id"]) {
+  if (!isset($_SESSION["username"]) && !isset($_SESSION["user_id"])) {
     header("Location: index.php");
     exit;
   }
 
-  $status = "";
-  
   $title = "Add Quiz";
   $flaticon = "../assets/icons/flaticon.png";
 
-  if($_SERVER["REQUEST_METHOD"] == "POST"){
+  $status = "";
+  
+  if (isset($_GET["status"]) && isset($_GET["id"]) && is_numeric((int)$_GET["id"])) {
+    $quizID = (int)$_GET["id"];
 
-    try {
-      include_once "../db/config.php";
+    if ($_GET["status"] == "successful" && is_int((int)$_GET["id"])) {
+      $status = "<div class='text-4xl poppins-semibold tracking-wide text-center flex items-center justify-center'><span class='mr-6'>Success!</span> <a href='quiz.php?quiz_id=$quizID' class='btn btn-primary'>Edit</a></div>";
+    }
+  }
 
-      if (isset($_POST["nama_kuis"])) {
-        $namaKuis = htmlspecialchars($_POST["nama_kuis"]);
-      } else {
-        header("Location: 404.php");
-        exit;
-      }
-
-      $query = "INSERT INTO tb_daftar_kuis (nama_kuis) VALUES (?)";
-      $stmt = mysqli_prepare($conn, $query);
-
-      if (!$stmt) {
-          throw new Exception(mysqli_error($conn));
-      }
-
-      mysqli_stmt_bind_param($stmt, "s", $namaKuis);
-
-      if (!mysqli_stmt_execute($stmt)) {
-          throw new Exception(mysqli_stmt_error($stmt));
-      }
-
-      $status = '<div class="text-4xl poppins-semibold tracking-wide text-center">Success!</div>';
-    } 
-      
-    catch (Exception $e) {
-      // echo "Error: " . $e->getMessage();
-      header("Location: 404.php"); 
-      exit;
+  else if (isset($_GET["status"])) {
+    if ($_GET["status"] == "failed") {
+      $status = '<div class="text-4xl poppins-semibold tracking-wide text-center mb-2"><span>Failed!</span></div> <div class="text-center w-full">The name of the quiz can not be the same. Please try again!</div>';
     }
   }
 ?>
@@ -68,9 +47,9 @@
 <body class="w-full min-h-screen overflow-hidden flex justify-center items-center">
   
   <main class="max-w-5xl w-full px-8">
-    <form action="add-quiz.php" method="post" class="w-full max-w-3xl flex justify-center gap-4 items-center mx-auto h-48 bg-base-300 rounded-box">
+    <form action="post-quiz.php" method="post" class="w-full max-w-3xl flex justify-center gap-4 items-center mx-auto h-48 bg-base-300 rounded-box">
       <input type="text" placeholder="Quiz Title here" class="input input-bordered w-full max-w-xs" name="nama_kuis"/>
-      <button class="btn btn-primary">Make Quiz!</button>
+      <button class="btn btn-primary poppins-semibold tracking-wide">Make Quiz!</button>
     </form>
     <div class="divider"></div>
     <?= $status ?>

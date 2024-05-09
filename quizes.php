@@ -14,6 +14,10 @@ $flaticon = "./assets/icons/flaticon.png";
     exit;
   }
 
+  finally {
+    mysqli_close($conn);
+  }
+
 ?>
 
 <!DOCTYPE html>

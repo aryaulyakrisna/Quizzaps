@@ -83,7 +83,7 @@
             <div class="w-full flex flex-col items-start gap-4 ">
               <div
                 id="radio-container"
-                class="w-full flex gap-6 p-4 rounded-lg bg-[#1D232A] hover:text-[#1D232A] hover:bg-[#6A75F1] group"
+                class="w-full flex items-center gap-6 p-4 rounded-lg bg-[#1D232A] hover:text-[#1D232A] hover:bg-[#6A75F1] group"
               >
                 <input
                   id="jawaban"
@@ -93,12 +93,12 @@
                   value="1"
                   class="radio radio-sm checked:bg-[#6A75F1] group-hover:bg-[#1D232A] group-hover:checked:bg-[#6A75F1]"
                 />
-                <span><?= $row["jawaban1"] ?></span>
+                <span class="text-start"><?= $row["jawaban1"] ?></span>
               </div>
 
               <div
                 id="radio-container"
-                class="w-full flex gap-6 p-4 rounded-lg bg-[#1D232A] hover:text-[#1D232A] hover:bg-[#6A75F1] group"
+                class="w-full flex items-center gap-6 p-4 rounded-lg bg-[#1D232A] hover:text-[#1D232A] hover:bg-[#6A75F1] group"
               >
                 <input
                   id="jawaban"
@@ -108,12 +108,12 @@
                   value="2"
                   class="radio radio-sm checked:bg-[#6A75F1] group-hover:bg-[#1D232A] group-hover:checked:bg-[#6A75F1]"
                 />
-                <span><?= $row["jawaban2"] ?></span>
+                <span class=" text-start"><?= $row["jawaban2"] ?></span>
               </div>
 
               <div
                 id="radio-container"
-                class="w-full flex gap-6 p-4 rounded-lg bg-[#1D232A] hover:text-[#1D232A] hover:bg-[#6A75F1] group"
+                class="w-full flex items-center gap-6 p-4 rounded-lg bg-[#1D232A] hover:text-[#1D232A] hover:bg-[#6A75F1] group"
               >
                 <input
                   id="jawaban"
@@ -123,7 +123,7 @@
                   value="3"
                   class="radio radio-sm checked:bg-[#6A75F1] group-hover:bg-[#1D232A] group-hover:checked:bg-[#6A75F1]"
                 />
-                <span><?= $row["jawaban3"] ?></span>
+                <span class="text-start"><?= $row["jawaban3"] ?></span>
               </div>
             </div>
           </div>
