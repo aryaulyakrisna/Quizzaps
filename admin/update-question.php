@@ -37,5 +37,3 @@ if (isset($_GET["quiz_id"]) && is_numeric((int)$_GET["quiz_id"]) && isset($_GET[
     // exit;
   }
 }
-
-

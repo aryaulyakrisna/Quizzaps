@@ -67,15 +67,15 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
 </head>
-<body class="w-full min-h-screen overflow-x-hidden poppins-regular px-4">
+<body class="w-full min-h-screen overflow-x-hidden poppins-regular px-8 flex justify-center">
   
-  <main class="max-w-3xl w-full flex-col px-8 pt-40 mx-auto">
+  <main class="max-w-3xl w-full flex-col pt-40">
     <div class="w-full">
       <?= isset($status)? $status : "" ?>
       <form action="update-quiz-title.php?quiz_id=<?= $quizID ?>" method="post" class="flex items-center gap-4">
-        <input type="text"class="input input-bordered input-lg px-6 w-full" value="<?= $quiz["nama_kuis"]?>" name="nama_kuis"/> 
-        <input type="submit" value="Change quiz title" class="btn btn-active btn-primary poppins-bold tracking-wide">
-        <a href="delete-all-question.php?quiz_id=<?= $quizID ?>" class="btn btn-active btn-warning poppins-semibold tracking-wide">
+        <input type="text"class="input input-bordered input-lg gap-2 px-6 w-full" value="<?= $quiz["nama_kuis"]?>" name="nama_kuis"/> 
+        <input type="submit" value="Change title" class="btn btn-active btn-primary poppins-bold tracking-wide max-md:text-xs">
+        <a href="delete-all-question.php?quiz_id=<?= $quizID ?>" class="btn btn-active btn-warning poppins-semibold tracking-wide max-md:text-xs">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#000000" viewBox="0 0 256 256"><path d="M216,48H180V36A28,28,0,0,0,152,8H104A28,28,0,0,0,76,36V48H40a12,12,0,0,0,0,24h4V208a20,20,0,0,0,20,20H192a20,20,0,0,0,20-20V72h4a12,12,0,0,0,0-24ZM100,36a4,4,0,0,1,4-4h48a4,4,0,0,1,4,4V48H100Zm88,168H68V72H188ZM116,104v64a12,12,0,0,1-24,0V104a12,12,0,0,1,24,0Zm48,0v64a12,12,0,0,1-24,0V104a12,12,0,0,1,24,0Z"></path></svg>
           All
         </a>
@@ -92,10 +92,10 @@
       $rowIndex++; 
     ?>
 
-      <form action="update-question.php?id=<?= $row["id"]?>&quiz_id=<?= $quizID?>" method="post" class=" rounded-3xl w-full border border-[#2B3039] p-10 flex flex-col gap-4 mb-6">
-        <input type="text" class="input input-bordered input-lg w-full" name="soal" placeholder="Type the question here" value="<?= $row["soal"]?>"/>
+      <form action="update-question.php?id=<?= $row["id"]?>&quiz_id=<?= $quizID?>" method="post" class=" rounded-3xl w-full border border-[#2B3039] p-8 flex flex-col gap-4 mb-6">
+        <input type="text" class="input input-bordered input-lg gap-2 w-full" name="soal" placeholder="Type the question here" value="<?= $row["soal"]?>"/>
 
-        <div class="input input-bordered w-full flex items-center input-lg">
+        <div class="input input-bordered w-full flex items-center input-lg gap-2">
           <input id="jawaban1" type="text" class="w-full" placeholder="Type the answer here" name="jawaban1" value="<?= $row["jawaban1"] ?>">
           <input
             id="jawaban_benar<?= $row["id"]?>"
@@ -107,7 +107,7 @@
             <?php echo ($row["jawaban_benar"] == 1)? "checked='checked'" : "" ; ?>
           />
         </div>
-        <div class="input input-bordered w-full flex items-center input-lg">
+        <div class="input input-bordered w-full flex items-center input-lg gap-2">
           <input id="jawaban2" type="text" class="w-full" placeholder="Type the aswer here" name="jawaban2" value="<?= $row["jawaban2"] ?>">
           <input
             id="jawaban_benar<?= $row["id"]?>"
@@ -119,8 +119,8 @@
             <?php echo ($row["jawaban_benar"] == 2)? "checked='checked'" : "" ; ?>
           />
         </div>
-        <div class="input input-bordered w-full flex items-center input-lg">
-          <input id="jawaban3" type="text" class="w-full" placeholder="Type the answer here" name="jawaban3" value="<?= $row["jawaban2"] ?>">
+        <div class="input input-bordered w-full flex items-center input-lg gap-2">
+          <input id="jawaban3" type="text" class="w-full" placeholder="Type the answer here" name="jawaban3" value="<?= $row["jawaban3"] ?>">
           <input
             id="jawaban_benar<?= $row["id"]?>"
             data-value="1"
@@ -133,18 +133,18 @@
           />
         </div>
         <div class="w-full flex gap-4 justify-end mt-2">
-          <input type="submit" class="btn btn-active btn-primary poppins-semibold tracking-wide" value="Update">
-          <a href="delete-question.php?id=<?= $row["id"]?>&quiz_id=<?= $quizID?>" class="btn btn-active btn-warning poppins-semibold tracking-wide">Delete</a>
+          <input type="submit" class="btn btn-active btn-primary poppins-semibold tracking-wide max-md:text-xs" value="Update">
+          <a href="delete-question.php?id=<?= $row["id"]?>&quiz_id=<?= $quizID?>" class="btn btn-active btn-warning poppins-semibold tracking-wide max-md:text-xs">Delete</a>
         </div>
       </form>
 
     <?php } ?>
 
     <?php if (mysqli_num_rows($sql) == 0) { ?>
-      <form action="post-question.php?quiz_id=<?= $quizID ?>" method="post" class=" rounded-3xl w-full border border-[#2B3039] p-10 flex flex-col gap-4 mb-6">
-        <input type="text" class="input input-bordered input-lg w-full" name="soal" placeholder="Type the question here"/>
+      <form id="add-question-form" action="post-question.php?quiz_id=<?= $quizID ?>" method="post" class=" rounded-3xl w-full border border-[#2B3039] p-8 flex flex-col gap-4 mb-6">
+        <input type="text" class="input input-bordered input-lg gap-2 w-full" name="soal" placeholder="Type the question here"/>
 
-        <div class="input input-bordered w-full flex items-center input-lg">
+        <div class="input input-bordered w-full flex items-center input-lg gap-2">
           <input id="jawaban1" type="text" class="w-full" placeholder="Type the answer here" name="jawaban1">
           <input
             id="jawaban_benar"
@@ -155,7 +155,7 @@
             class="radio radio-sm checked:bg-[#6A75F1] "
           />
         </div>
-        <div class="input input-bordered w-full flex items-center input-lg">
+        <div class="input input-bordered w-full flex items-center input-lg gap-2">
           <input id="jawaban2" type="text" class="w-full" placeholder="Type the answer here" name="jawaban2">
           <input
             id="jawaban_benar"
@@ -166,7 +166,7 @@
             class="radio radio-sm checked:bg-[#6A75F1] "
           />
         </div>
-        <div class="input input-bordered w-full flex items-center input-lg">
+        <div class="input input-bordered w-full flex items-center input-lg gap-2">
           <input id="jawaban3" type="text" class="w-full" placeholder="Type the answer here" name="jawaban3">
           <input
             id="jawaban_benar"
@@ -177,7 +177,7 @@
             class="radio radio-sm checked:bg-[#6A75F1] "
           />
         </div>
-        <div class="w-full flex gap-4 justify-end mt-2">
+        <div class="w-full flex gap-4 justify-end mt-2 max-md:text-xs">
           <input type="submit" value="Add" class="btn btn-active btn-primary poppins-semibold tracking-wide">
         </div>
       </form>
@@ -189,7 +189,7 @@
 
     <div class="divider"></div>
 
-    <div class="w-full mb-20 flex justify-end items-center gap-6">
+    <div class="w-full mb-20 flex justify-end items-center gap-6 max-md:text-xs">
       <div>Please add question one by one!</div>
       <div id="btn-add" class="btn btn-primary">
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M228,128a12,12,0,0,1-12,12H140v76a12,12,0,0,1-24,0V140H40a12,12,0,0,1,0-24h76V40a12,12,0,0,1,24,0v76h76A12,12,0,0,1,228,128Z"></path></svg>
@@ -201,12 +201,16 @@
   
   <script defer>
 
+    if (document.getElementById("add-question-form")) {
+      document.getElementById("btn-add").setAttribute("disabled", "disabled");
+    }
+
     document.getElementById("btn-add").addEventListener("click", () => {
       HTML = `
-      <form action="post-question.php?quiz_id=<?= $quizID ?>" method="post" class=" rounded-3xl w-full border border-[#2B3039] p-10 flex flex-col gap-4 mb-6">
-        <input type="text" class="input input-bordered input-lg w-full" name="soal" placeholder="Type the question here"/>
+      <form id="add-question-form" action="post-question.php?quiz_id=<?= $quizID ?>" method="post" class=" rounded-3xl w-full border border-[#2B3039] p-8 flex flex-col gap-4 mb-6">
+        <input type="text" class="input input-bordered input-lg gap-2 w-full" name="soal" placeholder="Type the question here"/>
 
-        <div class="input input-bordered w-full flex items-center input-lg">
+        <div class="input input-bordered w-full flex items-center input-lg gap-2">
           <input id="jawaban1" type="text" class="w-full" placeholder="Type the answer here" name="jawaban1">
           <input
             id="jawaban_benar"
@@ -217,7 +221,7 @@
             class="radio radio-sm checked:bg-[#6A75F1] "
           />
         </div>
-        <div class="input input-bordered w-full flex items-center input-lg">
+        <div class="input input-bordered w-full flex items-center input-lg gap-2">
           <input id="jawaban2" type="text" class="w-full" placeholder="Type the answer here" name="jawaban2">
           <input
             id="jawaban_benar"
@@ -228,7 +232,7 @@
             class="radio radio-sm checked:bg-[#6A75F1] "
           />
         </div>
-        <div class="input input-bordered w-full flex items-center input-lg">
+        <div class="input input-bordered w-full flex items-center input-lg gap-2">
           <input id="jawaban3" type="text" class="w-full" placeholder="Type the answer here" name="jawaban3">
           <input
             id="jawaban_benar"
@@ -239,13 +243,16 @@
             class="radio radio-sm checked:bg-[#6A75F1] "
           />
         </div>
-        <div class="w-full flex gap-4 justify-end mt-2">
+        <div class="w-full flex gap-4 justify-end mt-2 max-md:text-xs">
           <input type="submit" value="Add" class="btn btn-active btn-primary poppins-semibold tracking-wide">
         </div>
       </form>
       `;
 
       document.getElementById("container-questions").innerHTML += HTML;
+      if (document.getElementById("add-question-form")) {
+        document.getElementById("btn-add").setAttribute("disabled", "disabled");
+      }
     });
   </script>
   

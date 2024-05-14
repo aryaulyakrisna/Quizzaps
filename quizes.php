@@ -11,8 +11,10 @@ $flaticon = "./assets/icons/flaticon.png";
   } 
 
   catch (Exception $e) {
-    header("Location: ./404.php");
-    exit;
+    echo $e->getMessage();
+
+    // header("Location: ./404.php");
+    // exit;
   }
 ?>
 

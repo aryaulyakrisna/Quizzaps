@@ -1,5 +1,5 @@
 
-<header class="px-20 h-[100px] flex fixed top-0 right-0 w-full justify-between items-center shadow-md z-1000 bg-[#1D232A]">
+<header class="px-20 max-lg:px-8 h-[100px] flex fixed top-0 right-0 w-full justify-between items-center shadow-md z-1000 bg-[#1D232A]">
     <div class="navbar bg-base-100">
       <div class="navbar-start">
         <div class="drawer">
@@ -25,12 +25,12 @@
         </div>
       </div>
       <div class="navbar-center">
-        <a class="text-xl poppins-bold tracking-wide">Quizzaps</a>
+        <a class="text-xl poppins-bold tracking-wide max-lg:text-lg">Quizzaps</a>
       </div>
       <div class="navbar-end">
-        <button class="btn poppins-semibold tracking-wide" onclick="my_modal_5.showModal()">Logout</button>
-        <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
-          <div class="modal-box p-10">
+        <button class="btn poppins-semibold tracking-wide max-lg:text-xs" onclick="my_modal_5.showModal()">Logout</button>
+        <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle flex items-center justify-center max-lg:px-8">
+          <div class="modal-box p-10 max-lg:p-8 rounded-xl">
             <h3 class="poppins-bold text-xl">Logout!</h3>
             <p class="py-4 text-lg">Anda yakin untuk keluar?</p>
             <div class="modal-action">
