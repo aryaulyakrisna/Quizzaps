@@ -1,40 +1,45 @@
 function setIntersection() {
-
-    const intersectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          document.querySelector("main").classList.remove("scale-0");
-        }
-      });
+  const intersectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        document.querySelector("main").classList.remove("scale-0");
+      }
     });
+  });
 
-    intersectionObserver.observe(document.querySelector("main"));
+  intersectionObserver.observe(document.querySelector("main"));
 }
 
 function landingPageImgIntersection() {
   const intersectionObserver1 = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        document.querySelector("#landing-page-img").classList.remove("-translate-x-10", "translate-y-10");
+        document
+          .querySelector("#landing-page-img")
+          .classList.remove("min-lg:-translate-x-10", "min-lg:translate-y-10");
       }
     });
   });
 
-  intersectionObserver1.observe(document.querySelector("#landing-page-img"));
+  const w = window.innerWidth();
+  if (w > 512) {
+    intersectionObserver1.observe(document.querySelector("#landing-page-img"));
+  }
 }
 
 function wavesIntersection() {
-    const intersectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          document
-            .querySelector("#waves")
-            .classList.remove("translate-x-24");
-        }
-      });
+  const intersectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        document.querySelector("#waves").classList.remove("min-lg:translate-x-24");
+      }
     });
+  });
 
+  const w = window.innerWidth();
+  if (w > 512) {
     intersectionObserver.observe(document.querySelector("#waves"));
+  }
 }
 
 function guestActionIntersection() {
@@ -43,10 +48,13 @@ function guestActionIntersection() {
       if (entry.isIntersecting) {
         document
           .querySelector("#guest-action")
-          .classList.remove("-translate-x-10", "translate-y-10", "opacity-0");
+          .classList.remove("min-lg:-translate-x-10", "min-lg:translate-y-10", "min-lg:opacity-0");
       }
     });
   });
 
-  intersectionObserver.observe(document.querySelector("#guest-action"));
+  const w = window.innerWidth();
+  if (w > 512) {
+    intersectionObserver.observe(document.querySelector("#guest-action"));
+  }
 }

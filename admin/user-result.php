@@ -6,8 +6,8 @@
     exit;
   }
 
-  if (isset($_GET["nama_quiz"])) {
-      $namaQuiz = htmlspecialchars($_GET["nama_quiz"]);
+  if (isset($_GET["nama_kuis"])) {
+      $namaKuis = htmlspecialchars($_GET["nama_kuis"]);
   } else {
     header("Location: 404.php");
     exit;
@@ -22,7 +22,7 @@
     exit;
   }
 
-  $title = "List " . $namaQuiz;
+  $title = "List " . $namaKuis;
   $flaticon = "../assets/icons/flaticon.png";
 
   try {
@@ -63,14 +63,14 @@
     <div class="overflow-x-auto h-[500px] no-scrollbar">
       <table class="table">
         <!-- head -->
-        <thead class="h-20 sticky top-0 bg-[#1D232A] shadow-md">
+        <thead class="h-20 sticky top-0 bg-[#1D232A] shadow-md text-[#6A75F1]">
           <tr>
             <th></th>
             <th>Nama</th>
             <th>NPM</th>
             <th>Kelas</th>
-            <th>Benar</th>
             <th>Salah</th>
+            <th>Benar</th>
             <th>Skor</th>
             <th>Hapus</th>
           </tr>
@@ -89,7 +89,7 @@
               <td><?= $row["jawaban_salah"]?></td>
               <td><?= $row["jawaban_benar"]?></td>
               <td><?= $row["skor"]?></td>
-              <td><a href="./delete-user-result.php?quiz_id=<?= $quizID ?>&id=<?= $row["id"] ?>" class="btn btn-active btn-ghost">
+              <td><a href="./delete-user-result.php?quiz_id=<?= $quizID ?>&result_id=<?= $row["id"] ?>" class="btn btn-active btn-warning">
                 Hapus
               </a></td>
             </tr>

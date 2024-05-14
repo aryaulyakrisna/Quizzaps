@@ -7,17 +7,13 @@ $flaticon = "./assets/icons/flaticon.png";
     include_once "db/config.php";
     $query = "SELECT * from tb_daftar_kuis";
     $sql = mysqli_query($conn, $query) or die(mysqli_error($conn));
+    mysqli_close($conn);
   } 
 
   catch (Exception $e) {
     header("Location: ./404.php");
     exit;
   }
-
-  finally {
-    mysqli_close($conn);
-  }
-
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +36,7 @@ $flaticon = "./assets/icons/flaticon.png";
 
 </head>
 <body class="w-full min-h-screen overflow-x-hidden poppins-regular">
-  <header class="px-20 h-[100px] flex fixed top-0 right-0 w-full justify-between items-center shadow-md z-1000">
+  <header class="lg:px-20 px-8 text-sm h-[100px] flex fixed top-0 right-0 w-full justify-between items-center shadow-md z-1000 bg-[#1D232A]">
       <h1 class="text-2xl max-md:text-lg text-[#6A75F1] poppins-semibold">Choose Your Quiz!</h1>
       <a href="./" class="btn btn-primary poppins-semibold tracking-wide">Go Back!</a>
   </header>

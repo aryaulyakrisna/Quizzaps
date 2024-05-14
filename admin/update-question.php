@@ -15,12 +15,12 @@ if (isset($_GET["quiz_id"]) && is_numeric((int)$_GET["quiz_id"]) && isset($_GET[
   $jawaban1 = htmlspecialchars($_POST["jawaban1"]);
   $jawaban2 = htmlspecialchars($_POST["jawaban2"]);
   $jawaban3 = htmlspecialchars($_POST["jawaban3"]);
-  $jawaban_benar = (int)$_POST["jawaban_benar$ID"];
+  $jawabanBenar = (int)$_POST["jawaban_benar$ID"];
 
   try {
     include_once "../db/config.php";
 
-    $query1 = "UPDATE tb_soal_$quizID SET soal = '$soal', jawaban1 = '$jawaban1', jawaban2 = '$jawaban2', jawaban3 = '$jawaban3', jawaban_benar = '$jawaban_benar'  WHERE id = $ID";
+    $query1 = "UPDATE tb_soal_$quizID SET soal = '$soal', jawaban1 = '$jawaban1', jawaban2 = '$jawaban2', jawaban3 = '$jawaban3', jawaban_benar = '$jawabanBenar'  WHERE id = $ID";
 
     $sql1 = mysqli_query($conn, $query1);;
 

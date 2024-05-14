@@ -4,6 +4,12 @@
   $title = "Login";
   $flaticon = "../assets/icons/flaticon.png";
 
+  $status = "";
+
+  if (isset($_GET["status"]) && $_GET["status"] == "failed") {
+    $status = "<div class='w-full text-center text-sm'>Login Failed! Incorect username or password</div>";
+  }
+
 ?>
 
 <!DOCTYPE html>
@@ -40,14 +46,17 @@
       <span class="label-text ml-1">Password:</span>
       <input id="password" type="password" class="input w-full" placeholder="Password" name="password">
 
+      <?= $status ?>
+
       <div class="w-full mt-6 flex gap-2 justify-between items-start">
         <span class="w-full text-start ml-1">Login as admin</span>
         <div>
-          <input id="btn-submit" type="submit" value="Login" class="btn btn-primary poppins-semibold tracking-wide px-8 mb-4 " disabled>
+          <input id="btn-submit" type="submit" value="Login" class="btn btn-primary poppins-semibold tracking-wide px-8 mb-4" disabled>
         </div>
       </div>
 
     </form>
+
   </main>
 
   <script>

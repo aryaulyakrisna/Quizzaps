@@ -55,7 +55,7 @@
         $emote = "😭";
     }
 
-    $queryInsert = "INSERT INTO tb_hasil_" . $quizID . "(npm, nama, kelas, jawaban_benar, jawaban_salah, skor) VALUES (?, ?, ?, ?, ?, ?)";
+    $queryInsert = "INSERT INTO tb_hasil_$quizID (npm, nama, kelas, jawaban_benar, jawaban_salah, skor) VALUES (?, ?, ?, ?, ?, ?)";
     $stmtInsert = mysqli_prepare($conn, $queryInsert);
     mysqli_stmt_bind_param($stmtInsert, "sssiii", $npm, $nama, $kelas, $jawaban_benar, $jawaban_salah, $skor);
     mysqli_stmt_execute($stmtInsert);
@@ -71,6 +71,7 @@
   } 
     
   catch (Exception $e) {
+    // echo "Error: " . $e->getMessage();
 
     header("Location: 404.php");
     exit;

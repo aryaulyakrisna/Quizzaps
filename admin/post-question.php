@@ -14,9 +14,9 @@ if (isset($_GET["quiz_id"]) && is_numeric((int)$_GET["quiz_id"])) {
   $jawaban1 = htmlspecialchars($_POST["jawaban1"]);
   $jawaban2 = htmlspecialchars($_POST["jawaban2"]);
   $jawaban3 = htmlspecialchars($_POST["jawaban3"]);
-  $jawabanBenar = (int)$_POST["jawaban-benar"];
+  $jawabanBenar = (int)$_POST["jawaban_benar"];
 
-  if ( $soal == "" || $jawaban1 == "" || $jawaban2 == "" || $jawaban3 == "" || $jawabanBenar < 0) {
+  if ( $soal == "" || $jawaban1 == "" || $jawaban2 == "" || $jawaban3 == "" || $jawabanBenar <= 0) {
     header("Location: quiz.php?quiz_id=$quizID&added_status=failed");
     exit;
   }

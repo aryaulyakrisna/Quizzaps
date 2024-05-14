@@ -29,11 +29,11 @@
         } 
         
         else {
-          header("Location: index.php?status=Login Failed");
+          header("Location: index.php?status=failed");
           exit;
         }
       } catch (Exception $e) {
-        header("Location: index.php?status=Login Failed");
+        header("Location: index.php?status=failed");
         exit;
       }
 

@@ -38,7 +38,7 @@
                 <button class="btn btn-primary mr-1">No</button>
               </form>
               <form action="logout.php" method="post">
-                <input type="submit" value="Yes" class="btn btn-primary">
+                <input type="submit" value="Yes" class="btn btn-active btn-warning">
               </form>
             </div>
           </div>

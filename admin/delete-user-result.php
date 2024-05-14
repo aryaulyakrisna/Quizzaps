@@ -22,17 +22,23 @@ if (isset($_GET["quiz_id"]) && is_numeric((int)$_GET["quiz_id"]) && isset($_GET[
 
     $sql2 = mysqli_query($conn, $query2);
 
+    $query3 = "SELECT nama_kuis FROM tb_daftar_kuis WHERE quiz_id = $quizID";
+
+    $sql3 = mysqli_query($conn, $query3);
+
+    $namaKuis = mysqli_fetch_assoc($sql);
+
     mysqli_close($conn);
 
-    header("Location: user-result.php?quiz_id=$quizID");
+    header("Location: user-result.php?quiz_id=$quizID&nama_kuis=$namaKuis");
     exit;
   }
 
   catch (Exception $e) {
-    // echo "Error: " . $e->getMessage();
+    echo "Error: " . $e->getMessage();
 
-    header("Location: 404.php");
-    exit;
+    // header("Location: 404.php");
+    // exit;
   }
 }
 

@@ -75,7 +75,7 @@
       <form action="update-quiz-title.php?quiz_id=<?= $quizID ?>" method="post" class="flex items-center gap-4">
         <input type="text"class="input input-bordered input-lg px-6 w-full" value="<?= $quiz["nama_kuis"]?>" name="nama_kuis"/> 
         <input type="submit" value="Change quiz title" class="btn btn-active btn-primary poppins-bold tracking-wide">
-        <a href="delete-all-question.php?quiz_id=<?= $quizID ?>" class="btn btn-active btn-primary poppins-semibold tracking-wide">
+        <a href="delete-all-question.php?quiz_id=<?= $quizID ?>" class="btn btn-active btn-warning poppins-semibold tracking-wide">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#000000" viewBox="0 0 256 256"><path d="M216,48H180V36A28,28,0,0,0,152,8H104A28,28,0,0,0,76,36V48H40a12,12,0,0,0,0,24h4V208a20,20,0,0,0,20,20H192a20,20,0,0,0,20-20V72h4a12,12,0,0,0,0-24ZM100,36a4,4,0,0,1,4-4h48a4,4,0,0,1,4,4V48H100Zm88,168H68V72H188ZM116,104v64a12,12,0,0,1-24,0V104a12,12,0,0,1,24,0Zm48,0v64a12,12,0,0,1-24,0V104a12,12,0,0,1,24,0Z"></path></svg>
           All
         </a>
@@ -96,45 +96,45 @@
         <input type="text" class="input input-bordered input-lg w-full" name="soal" placeholder="Type the question here" value="<?= $row["soal"]?>"/>
 
         <div class="input input-bordered w-full flex items-center input-lg">
-          <input id="jawaban1" type="text" class="w-full" placeholder="Type here" name="jawaban1" value="<?= $row["jawaban1"] ?>">
+          <input id="jawaban1" type="text" class="w-full" placeholder="Type the answer here" name="jawaban1" value="<?= $row["jawaban1"] ?>">
           <input
             id="jawaban_benar<?= $row["id"]?>"
             data-value="1"
-            name="jawaban-benar<?= $row["id"]?>"
+            name="jawaban_benar<?= $row["id"]?>"
             type="radio"
             value="1"
             class="radio radio-sm checked:bg-[#6A75F1]"
-            <?php echo (1 == $row["jawaban_benar"])? "checked='checked'" : "" ; ?>
+            <?php echo ($row["jawaban_benar"] == 1)? "checked='checked'" : "" ; ?>
           />
         </div>
         <div class="input input-bordered w-full flex items-center input-lg">
           <input id="jawaban2" type="text" class="w-full" placeholder="Type the aswer here" name="jawaban2" value="<?= $row["jawaban2"] ?>">
           <input
-            id="jawaban-benar<?= $row["id"]?>"
+            id="jawaban_benar<?= $row["id"]?>"
             data-value="2"
             name="jawaban_benar<?= $row["id"]?>"
             type="radio"
             value="2"
             class="radio radio-sm checked:bg-[#6A75F1]"
-            <?php echo (2 == $row["jawaban_benar"])? "checked='checked'" : "" ; ?>
+            <?php echo ($row["jawaban_benar"] == 2)? "checked='checked'" : "" ; ?>
           />
         </div>
         <div class="input input-bordered w-full flex items-center input-lg">
           <input id="jawaban3" type="text" class="w-full" placeholder="Type the answer here" name="jawaban3" value="<?= $row["jawaban2"] ?>">
           <input
-            id="jawaban-benar<?= $row["id"]?>"
+            id="jawaban_benar<?= $row["id"]?>"
             data-value="1"
             name="jawaban_benar<?= $row["id"]?>"
             type="radio"
             value="3"
             class="radio radio-sm checked:bg-[#6A75F1]"
-            <?php echo (3 == $row["jawaban_benar"])? "checked='checked'" : "" ; ?>
+            <?php echo ($row["jawaban_benar"] == 3)? "checked='checked'" : "" ; ?>
 
           />
         </div>
         <div class="w-full flex gap-4 justify-end mt-2">
           <input type="submit" class="btn btn-active btn-primary poppins-semibold tracking-wide" value="Update">
-          <a href="delete-question.php?id=<?= $row["id"]?>&quiz_id=<?= $quizID?>" class="btn btn-active btn-primary poppins-semibold tracking-wide">Delete</a>
+          <a href="delete-question.php?id=<?= $row["id"]?>&quiz_id=<?= $quizID?>" class="btn btn-active btn-warning poppins-semibold tracking-wide">Delete</a>
         </div>
       </form>
 
@@ -147,7 +147,7 @@
         <div class="input input-bordered w-full flex items-center input-lg">
           <input id="jawaban1" type="text" class="w-full" placeholder="Type the answer here" name="jawaban1">
           <input
-            id="jawaban-benar"
+            id="jawaban_benar"
             data-value="1"
             name="jawaban_benar"
             type="radio"
@@ -171,7 +171,7 @@
           <input
             id="jawaban_benar"
             data-value="1"
-            name="jawaban-benar"
+            name="jawaban_benar"
             type="radio"
             value="3"
             class="radio radio-sm checked:bg-[#6A75F1] "
@@ -204,10 +204,10 @@
     document.getElementById("btn-add").addEventListener("click", () => {
       HTML = `
       <form action="post-question.php?quiz_id=<?= $quizID ?>" method="post" class=" rounded-3xl w-full border border-[#2B3039] p-10 flex flex-col gap-4 mb-6">
-        <input type="text" class="input input-bordered input-lg w-full" name="soal"/>
+        <input type="text" class="input input-bordered input-lg w-full" name="soal" placeholder="Type the question here"/>
 
         <div class="input input-bordered w-full flex items-center input-lg">
-          <input id="jawaban1" type="text" class="w-full" placeholder="Type here" name="jawaban1">
+          <input id="jawaban1" type="text" class="w-full" placeholder="Type the answer here" name="jawaban1">
           <input
             id="jawaban_benar"
             data-value="1"
@@ -218,7 +218,7 @@
           />
         </div>
         <div class="input input-bordered w-full flex items-center input-lg">
-          <input id="jawaban2" type="text" class="w-full" placeholder="Type here" name="jawaban2">
+          <input id="jawaban2" type="text" class="w-full" placeholder="Type the answer here" name="jawaban2">
           <input
             id="jawaban_benar"
             data-value="2"
@@ -229,11 +229,11 @@
           />
         </div>
         <div class="input input-bordered w-full flex items-center input-lg">
-          <input id="jawaban3" type="text" class="w-full" placeholder="Type here" name="jawaban3">
+          <input id="jawaban3" type="text" class="w-full" placeholder="Type the answer here" name="jawaban3">
           <input
             id="jawaban_benar"
             data-value="1"
-            name="jawaban-benar"
+            name="jawaban_benar"
             type="radio"
             value="3"
             class="radio radio-sm checked:bg-[#6A75F1] "
