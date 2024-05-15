@@ -31,10 +31,9 @@ function wavesIntersection() {
   const intersectionObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        if (innerWidth >= 1024) {
-          document.querySelector("#waves").classList.remove("lg:translate-x-24");
+        if (innerWidth >= 1024) { 
+          document.querySelector("#waves").classList.remove("lg:translate-x-24");}
         }
-      }
     });
   });
 
@@ -46,11 +45,9 @@ function guestActionIntersection() {
   const intersectionObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        if (innerWidth >= 1024) {
           document
             .querySelector("#guest-action")
-            .classList.remove("lg:-translate-x-10", "lg:translate-y-10", "lg:opacity-0");
-        }
+            .classList.remove("-translate-x-10", "translate-y-10", "opacity-0");
         }
     });
   });

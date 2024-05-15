@@ -10,7 +10,7 @@
   $flaticon = "../assets/icons/flaticon.png";
   $jumlahSoal = 0;
   $soalTerjawab = 0;
-  $username = $_SESSION["username"];
+  $username = ucfirst($_SESSION["username"]);
 
   try {
     include_once "../db/config.php";

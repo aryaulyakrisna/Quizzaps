@@ -26,7 +26,7 @@ if (isset($_GET["quiz_id"]) && is_numeric((int)$_GET["quiz_id"]) && isset($_GET[
 
     $sql3 = mysqli_query($conn, $query3);
 
-    $namaKuis = mysqli_fetch_assoc($sql);
+    $namaKuis = mysqli_fetch_assoc($sql3);
 
     mysqli_close($conn);
 

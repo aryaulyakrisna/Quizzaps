@@ -33,9 +33,9 @@ $flaticon = "./assets/icons/flaticon.png";
     <a href="./admin/" class="poppins-bold tracking-wide btn btn-primary">Login</a>
   </header>
   
-  <main id="guest-action" class="max-w-7xl w-full text-start mx-4 lg:-translate-x-10 lg:translate-y-10 lg:opacity-0 transition-all duration-500 delay-150 z-1000">
+  <main id="guest-action" class="max-w-7xl w-full text-start mx-4 -translate-x-10 translate-y-10 opacity-0 transition-all duration-500 delay-150 z-1000">
     <h1 class="text-3xl poppins-bold mb-6">Tugas Kel 4, <span class="text-[#6A75F1]">Quizzaps</span></h1>
-    <p class="max-w-[550px] w-full text-lg max-sm:text-sm">Dive into a world of knowledge and fun with our interactive quiz app, challenging your mind with endless trivia questions! Gain valuable insight to your programming knoledge.</p>
+    <p class="max-w-[550px] w-full text-lg max-sm:text-sm">Dive into a world of knowledge and fun with our interactive quiz app, challenging your mind with endless trivia questions! Gain valuable insight to your programming knowledge.</p>
     <a href="./quizes.php" class="btn btn-primary mt-6 poppins-semibold tracking-wide">Start Quiz!</a>
   </main>
 
@@ -44,5 +44,6 @@ $flaticon = "./assets/icons/flaticon.png";
     wavesIntersection();
     guestActionIntersection();
 
+    console.log(guestActionIntersection);
   </script>
 </html>
