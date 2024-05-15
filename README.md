@@ -1,6 +1,6 @@
 # Quizzaps, App by kelompok 4
 
-- Group memmebr
+- Group member
   - Arya Ulya Krisna
   - Astri Salwa Putri Madani
   - Jonathan Regan
