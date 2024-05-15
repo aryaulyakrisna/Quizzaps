@@ -29,12 +29,12 @@
 
 - Make sure you have installed npm and composer
 
-  ***
-
+  ```
   npm --version
+  ```
+  ```
   composer --version
-
-  ***
+  ```
 
 - Run Apache and MySql, then import the quizzaps.sql file
 
