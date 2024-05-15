@@ -11,10 +11,9 @@
 # Run the App
 
 - Create a new env file as shown in the .env.example file or run.
-
-  ***
-
-  ## cp .env.example .env
+  ---
+  cp .env.example .env
+  ---
 
 - Install npm dependencies:
 
