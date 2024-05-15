@@ -23,9 +23,9 @@
 
 - Install composer dependencies:
 
-  ***
-
-  ## composer install
+  ```
+  composer install
+  ```
 
 - Make sure you have installed npm and composer
 
