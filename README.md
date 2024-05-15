@@ -41,4 +41,4 @@
 
   - Existing admin username = kel4pbo, password = kel4PboOk
 
-- go to http://localhost/kel4-pbo
+- Go to http://localhost/kel4-pbo
