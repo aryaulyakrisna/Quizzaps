@@ -9,7 +9,7 @@
   - Rizqi Fathurrohman
   - Shabrina Dzakiyah Adani
 
-# Run the App
+## Run the App
 
 - Create a new env file as shown in the .env.example file or run.
   ```
