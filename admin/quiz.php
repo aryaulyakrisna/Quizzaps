@@ -1,7 +1,7 @@
 <?php
   session_start();
 
-  if (!isset($_SESSION["username"]) || !isset($_SESSION["user_id"])) {
+  if (!isset($_SESSION["username"]) || !isset($_SESSION["id_admin"])) {
     header("Location: index.php");
     exit;
   }
@@ -27,15 +27,15 @@
   try {
     include_once "../db/config.php";
 
-    $quizID = (int)$_GET["quiz_id"];
+    $quizId = (int)$_GET["quiz_id"];
 
-    $query = "SELECT * FROM tb_soal_$quizID";
-    $sql = mysqli_query($conn, $query) or die(mysqli_error($conn));
+    $query1 = "SELECT * FROM tb_soal WHERE id_kuis = $quizId";
+    $sql1 = mysqli_query($conn, $query1) or die(mysqli_error($conn));
 
-    $query1 = "SELECT nama_kuis from tb_daftar_kuis WHERE quiz_id = $quizID";
-    $sql1 = mysqli_query($conn, $query1);
+    $query2 = "SELECT nama_kuis from tb_kuis WHERE id_kuis = $quizId";
+    $sql2 = mysqli_query($conn, $query2);
 
-    $quiz = mysqli_fetch_assoc($sql1);
+    $quiz = mysqli_fetch_assoc($sql2);
 
     mysqli_close($conn);
   }
@@ -57,10 +57,10 @@
   <main class="max-w-3xl w-full flex-col pt-40">
     <div class="w-full">
       <?= isset($status)? $status : "" ?>
-      <form action="update-quiz-title.php?quiz_id=<?= $quizID ?>" method="post" class="flex items-center gap-4">
-        <input type="text"class="input input-bordered input-lg gap-2 px-6 w-full" value="<?= $quiz["nama_kuis"]?>" name="nama_kuis"/> 
+      <form action="update-quiz-title.php?quiz_id=<?= $quizId ?>" method="post" class="flex items-center gap-4">
+        <input type="text"class="input input-bordered input-lg gap-2 px-6 w-full" value="<?= $quiz["nama_kuis"]?>" name="quiz_name"/> 
         <input type="submit" value="Change title" class="btn btn-active btn-primary poppins-bold tracking-wide max-md:text-xs">
-        <a href="delete-all-question.php?quiz_id=<?= $quizID ?>" class="btn btn-active btn-warning poppins-semibold tracking-wide max-md:text-xs">
+        <a href="delete-all-question.php?quiz_id=<?= $quizId ?>" class="btn btn-active btn-warning poppins-semibold tracking-wide max-md:text-xs">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#000000" viewBox="0 0 256 256"><path d="M216,48H180V36A28,28,0,0,0,152,8H104A28,28,0,0,0,76,36V48H40a12,12,0,0,0,0,24h4V208a20,20,0,0,0,20,20H192a20,20,0,0,0,20-20V72h4a12,12,0,0,0,0-24ZM100,36a4,4,0,0,1,4-4h48a4,4,0,0,1,4,4V48H100Zm88,168H68V72H188ZM116,104v64a12,12,0,0,1-24,0V104a12,12,0,0,1,24,0Zm48,0v64a12,12,0,0,1-24,0V104a12,12,0,0,1,24,0Z"></path></svg>
           All
         </a>
@@ -73,19 +73,19 @@
 
     <?php 
     $rowIndex = 0;
-    while ($row = mysqli_fetch_assoc($sql)) {
+    while ($row = mysqli_fetch_assoc($sql1)) {
       $rowIndex++; 
     ?>
 
-      <form action="update-question.php?id=<?= $row["id"]?>&quiz_id=<?= $quizID?>" method="post" class=" rounded-3xl w-full border border-[#2B3039] p-8 flex flex-col gap-4 mb-6">
+      <form action="update-question.php?question_id=<?= $row["id_soal"]?>&quiz_id=<?= $quizId?>" method="post" class=" rounded-3xl w-full border border-[#2B3039] p-8 flex flex-col gap-4 mb-6">
         <input type="text" class="input input-bordered input-lg gap-2 w-full" name="soal" placeholder="Type the question here" value="<?= $row["soal"]?>"/>
 
         <div class="input input-bordered w-full flex items-center input-lg gap-2">
           <input id="jawaban1" type="text" class="w-full" placeholder="Type the answer here" name="jawaban1" value="<?= $row["jawaban1"] ?>">
           <input
-            id="jawaban_benar<?= $row["id"]?>"
+            id="jawaban_benar<?= $row["id_soal"]?>"
             data-value="1"
-            name="jawaban_benar<?= $row["id"]?>"
+            name="jawaban_benar<?= $row["id_soal"]?>"
             type="radio"
             value="1"
             class="radio radio-sm checked:bg-[#6A75F1]"
@@ -95,9 +95,9 @@
         <div class="input input-bordered w-full flex items-center input-lg gap-2">
           <input id="jawaban2" type="text" class="w-full" placeholder="Type the aswer here" name="jawaban2" value="<?= $row["jawaban2"] ?>">
           <input
-            id="jawaban_benar<?= $row["id"]?>"
+            id="jawaban_benar<?= $row["id_soal"]?>"
             data-value="2"
-            name="jawaban_benar<?= $row["id"]?>"
+            name="jawaban_benar<?= $row["id_soal"]?>"
             type="radio"
             value="2"
             class="radio radio-sm checked:bg-[#6A75F1]"
@@ -107,9 +107,9 @@
         <div class="input input-bordered w-full flex items-center input-lg gap-2">
           <input id="jawaban3" type="text" class="w-full" placeholder="Type the answer here" name="jawaban3" value="<?= $row["jawaban3"] ?>">
           <input
-            id="jawaban_benar<?= $row["id"]?>"
+            id="jawaban_benar<?= $row["id_soal"]?>"
             data-value="1"
-            name="jawaban_benar<?= $row["id"]?>"
+            name="jawaban_benar<?= $row["id_soal"]?>"
             type="radio"
             value="3"
             class="radio radio-sm checked:bg-[#6A75F1]"
@@ -119,14 +119,14 @@
         </div>
         <div class="w-full flex gap-4 justify-end mt-2">
           <input type="submit" class="btn btn-active btn-primary poppins-semibold tracking-wide max-md:text-xs" value="Update">
-          <a href="delete-question.php?id=<?= $row["id"]?>&quiz_id=<?= $quizID?>" class="btn btn-active btn-warning poppins-semibold tracking-wide max-md:text-xs">Delete</a>
+          <a href="delete-question.php?question_id=<?= $row["id_soal"]?>&quiz_id=<?= $quizId ?>" class="btn btn-active btn-warning poppins-semibold tracking-wide max-md:text-xs">Delete</a>
         </div>
       </form>
 
     <?php } ?>
 
-    <?php if (mysqli_num_rows($sql) == 0) { ?>
-      <form id="add-question-form" action="post-question.php?quiz_id=<?= $quizID ?>" method="post" class=" rounded-3xl w-full border border-[#2B3039] p-8 flex flex-col gap-4 mb-6">
+    <?php if (mysqli_num_rows($sql1) == 0) { ?>
+      <form id="add-question-form" action="post-question.php?quiz_id=<?= $quizId ?>" method="post" class=" rounded-3xl w-full border border-[#2B3039] p-8 flex flex-col gap-4 mb-6">
         <input type="text" class="input input-bordered input-lg gap-2 w-full" name="soal" placeholder="Type the question here"/>
 
         <div class="input input-bordered w-full flex items-center input-lg gap-2">
@@ -190,7 +190,7 @@
 
     document.getElementById("btn-add").addEventListener("click", () => {
       HTML = `
-      <form id="add-question-form" action="post-question.php?quiz_id=<?= $quizID ?>" method="post" class=" rounded-3xl w-full border border-[#2B3039] p-8 flex flex-col gap-4 mb-6">
+      <form id="add-question-form" action="post-question.php?quiz_id=<?= $quizId ?>" method="post" class=" rounded-3xl w-full border border-[#2B3039] p-8 flex flex-col gap-4 mb-6">
         <input type="text" class="input input-bordered input-lg gap-2 w-full" name="soal" placeholder="Type the question here"/>
 
         <div class="input input-bordered w-full flex items-center input-lg gap-2">

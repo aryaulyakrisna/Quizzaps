@@ -1,8 +1,6 @@
 <?php
-  if (isset($_GET["quiz_id"])) {
-    if (is_int((int)$_GET["quiz_id"])) {
-      $quizID = (int)$_GET["quiz_id"];
-    }
+  if (isset($_GET["quiz_id"]) && is_int((int)$_GET["quiz_id"])) {
+    $quizID = (int)$_GET["quiz_id"];
   } else {
     header("Location: index.php");
     exit;
@@ -15,9 +13,9 @@
 
   $title = "Quizzaps | Your skor!! $emote";
   $flaticon = "./assets/icons/flaticon.png";
-  $output = "./output";
+  $output = "./output.css";
   
-  if (isset($_POST["nama"]) && isset($_POST["npm"]) && (int)$_POST["npm"] && isset($_POST["kelas"])) {
+  if (isset($_POST["nama"]) && isset($_POST["npm"]) && is_numeric((int)$_POST["npm"]) && isset($_POST["kelas"])) {
     $nama = htmlspecialchars($_POST['nama']);
     $npm = (int)$_POST['npm'];
     $kelas = htmlspecialchars($_POST['kelas']);
@@ -32,8 +30,13 @@
     include_once "./db/config.php";
 
     $rowindex = 0;
-    $query = "SELECT jawaban_benar from tb_soal_" . $quizID;
-    $sql = mysqli_query($conn, $query) or die(mysqli_error($conn));
+    $query = "SELECT jawaban_benar from tb_soal WHERE id_kuis = ?";
+    $stmt = mysqli_prepare($conn, $query);
+    mysqli_stmt_bind_param($stmt, "i", $quizID);
+    mysqli_stmt_execute($stmt);
+
+    $sql = mysqli_stmt_get_result($stmt);
+    mysqli_stmt_close($stmt);
 
     while ($row = mysqli_fetch_assoc($sql)) {
       $rowindex++;
@@ -54,13 +57,13 @@
         $emote = "😭";
     }
 
-    $queryInsert = "INSERT INTO tb_hasil_$quizID (npm, nama, kelas, jawaban_benar, jawaban_salah, skor) VALUES (?, ?, ?, ?, ?, ?)";
+    $queryInsert = "INSERT INTO tb_hasil (id_kuis, npm, nama, kelas, jumlah_benar, jumlah_salah, skor) VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmtInsert = mysqli_prepare($conn, $queryInsert);
-    mysqli_stmt_bind_param($stmtInsert, "sssiii", $npm, $nama, $kelas, $jawaban_benar, $jawaban_salah, $skor);
+    mysqli_stmt_bind_param($stmtInsert, "isssiii", $quizID, $npm, $nama, $kelas, $jawaban_benar, $jawaban_salah, $skor);
     mysqli_stmt_execute($stmtInsert);
     mysqli_stmt_close($stmtInsert);
 
-    $queryUpdate = "UPDATE tb_daftar_kuis SET jumlah_hasil = jumlah_hasil + 1 WHERE quiz_id = ?";
+    $queryUpdate = "UPDATE tb_kuis SET jumlah_hasil = jumlah_hasil + 1 WHERE id_kuis = ?";
     $stmtUpdate = mysqli_prepare($conn, $queryUpdate);
     mysqli_stmt_bind_param($stmtUpdate, "i", $quizID);
     mysqli_stmt_execute($stmtUpdate);

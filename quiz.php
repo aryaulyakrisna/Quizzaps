@@ -140,18 +140,6 @@
     document.getElementById("npm").addEventListener("keyup", letNextStep);
     document.getElementById("kelas").addEventListener("keyup", letNextStep);
 
-    document.getElementById("npm").addEventListener("input", () => {
-      if (document.getElementById("npm").value.length > 8 ) {
-        document.getElementById("npm").value = document.getElementById("npm").value.slice(0, 8);
-      }
-    })
-
-    document.getElementById("kelas").addEventListener("input", () => {
-      if (document.getElementById("kelas").value.length > 5 ) {
-        document.getElementById("kelas").value = document.getElementById("kelas").value.slice(0, 5);
-      }
-    })
-
     function letNextStep() {
       const nama = document.getElementById("nama")?.value.replace(/<\s*script\s*>|<\/\s*script\s*>|<\?php|<\?|\?>|<\?=|javascript:|"|'|`|/gi, '');
       const npm = document.getElementById("npm")?.value.replace(/<\s*script\s*>|<\/\s*script\s*>|<\?php|<\?|\?>|<\?=|javascript:|"|/gi, '');
@@ -162,18 +150,13 @@
       document.getElementById("kelas").value = kelas;
 
       if (
-      nama != " " 
-      && npm.length >= 7 
-      && kelas != " "
-      && kelas.length >= 4 
-      && document.getElementById("nama").value 
-      && document.getElementById("npm").value 
-      && document.getElementById("kelas").value 
+      document.getElementById("nama").value
+      && document.getElementById("nama").value != " "
+      && document.getElementById("npm").value.length == 8
+      && document.getElementById("kelas").value.length == 5 
       && document.getElementById("btn-next").hasAttribute("disabled")) {
         document.getElementById("btn-next").removeAttribute("disabled");
-      } else if (!document.getElementById("btn-next").hasAttribute("disabled")) {
-        document.getElementById("btn-next").setAttribute("disabled", "disabled");
-      }
+      } 
     } 
 
     // Set Atribute 'Checked' to input radio with just click its container

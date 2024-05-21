@@ -1,13 +1,13 @@
 <?php
   session_start();
 
-  if (!isset($_SESSION["username"]) && !isset($_SESSION["user_id"])) {
+  if (!isset($_SESSION["username"]) && !isset($_SESSION["id_admin"])) {
     header("Location: index.php");
     exit;
   }
 
-  if (isset($_GET["nama_kuis"])) {
-      $namaKuis = htmlspecialchars($_GET["nama_kuis"]);
+  if (isset($_GET["quiz_name"])) {
+      $namaKuis = htmlspecialchars($_GET["quiz_name"]);
   } else {
     header("Location: 404.php");
     exit;
@@ -24,13 +24,24 @@
 
   $title = "List " . $namaKuis;
   $flaticon = "../assets/icons/flaticon.png";
-  $output = "../output";
+  $output = "../output.css";
 
   try {
     include_once "../db/config.php";
-    $query = "SELECT * from tb_hasil_" . $quizID;
-    $sql = mysqli_query($conn, $query) or die(mysqli_error($conn));
+    $query = "SELECT * from tb_hasil WHERE id_kuis = ?";
+    $stmt = mysqli_prepare($conn, $query);
+    mysqli_stmt_bind_param($stmt, "i", $quizID);
+    mysqli_stmt_execute($stmt);
+    
+    $sql = mysqli_stmt_get_result($stmt);
+    
+    mysqli_stmt_close($stmt);
     mysqli_close($conn);
+
+    if (mysqli_num_rows($sql) == 0) {
+      header("Location: quiz-results.php");
+      exit;
+    }
   } 
 
   catch (Exception $e) {
@@ -71,10 +82,10 @@
               <td><?= $row["nama"]?></td>
               <td><?= $row["npm"]?></td>
               <td><?= $row["kelas"]?></td>
-              <td><?= $row["jawaban_salah"]?></td>
-              <td><?= $row["jawaban_benar"]?></td>
+              <td><?= $row["jumlah_salah"]?></td>
+              <td><?= $row["jumlah_benar"]?></td>
               <td><?= $row["skor"]?></td>
-              <td><a href="./delete-user-result.php?quiz_id=<?= $quizID ?>&result_id=<?= $row["id"] ?>" class="btn btn-active btn-warning">
+              <td><a href='./delete-user-result.php?quiz_id=<?= $quizID ?>&result_id=<?= $row["id_hasil"] ?>' class="btn btn-active btn-warning">
                 Hapus
               </a></td>
             </tr>

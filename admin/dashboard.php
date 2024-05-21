@@ -1,7 +1,7 @@
 <?php
   session_start();
 
-  if (!isset($_SESSION["username"]) || !isset($_SESSION["user_id"])) {
+  if (!isset($_SESSION["username"]) || !isset($_SESSION["id_admin"])) {
     header("Location: index.php");
     exit;
   }
@@ -15,7 +15,7 @@
 
   try {
     include_once "../db/config.php";
-    $query = "SELECT jumlah_hasil FROM tb_daftar_kuis";
+    $query = "SELECT jumlah_hasil FROM tb_kuis";
     $sql = mysqli_query($conn, $query) or die(mysqli_error($conn));
 
     while ($row = mysqli_fetch_assoc($sql)) {

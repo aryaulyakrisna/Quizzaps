@@ -1,7 +1,7 @@
 <?php
   session_start();
 
-  if (!$_SESSION["username"] && !$_SESSION["user_id"]) {
+  if (!$_SESSION["username"] && !$_SESSION["id_admin"]) {
     header("Location: index.php");
     exit;
   }
@@ -13,14 +13,19 @@
   
   try {
     include_once "../db/config.php";
-    $query = "SELECT * from tb_daftar_kuis";
+
+    $adminId = $_SESSION["id_admin"];
+
+    $query = "SELECT * from tb_kuis WHERE id_admin = $adminId";
     $sql = mysqli_query($conn, $query) or die(mysqli_error($conn));
     mysqli_close($conn);
   } 
 
   catch (Exception $e) {
-    header("Location: 404.php");
-    exit;
+    echo "Error: " . $e->getMessage();
+
+    // header("Location: 404.php");
+    // exit;
   }
 
   include_once "../template/header.php";
@@ -55,12 +60,12 @@
               <td><?= $row["nama_kuis"]?></td>
               <td><?= $row["jumlah_hasil"]?></td>
               <td>
-                <a href="user-result.php?quiz_id=<?= $row["quiz_id"] ?>&nama_kuis=<?= $row["nama_kuis"] ?>" class="btn btn-ghost">
+                <a href='user-result.php?quiz_id=<?= $row["id_kuis"] ?>&quiz_name=<?= $row["nama_kuis"] ?>' class="btn btn-ghost">
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#A6ADBB" viewBox="0 0 256 256"><path d="M224.49,136.49l-72,72a12,12,0,0,1-17-17L187,140H40a12,12,0,0,1,0-24H187L135.51,64.48a12,12,0,0,1,17-17l72,72A12,12,0,0,1,224.49,136.49Z"></path></svg>
                 </a>
               </td>
               <td>
-                <a href="./delete-quiz-result.php?quiz_id=<?= $row["quiz_id"] ?>" class="btn btn-active btn-warning poppins-semibold tracking-wide">
+                <a href='./delete-quiz-result.php?quiz_id=<?= $row["id_kuis"] ?>' class="btn btn-active btn-warning poppins-semibold tracking-wide">
                 Hapus
                 </a>
               </td>
