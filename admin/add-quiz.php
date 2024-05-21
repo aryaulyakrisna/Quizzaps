@@ -8,6 +8,7 @@
 
   $title = "Add Quiz";
   $flaticon = "../assets/icons/flaticon.png";
+  $output = "../output.css";
 
   $status = "";
   
@@ -24,27 +25,12 @@
       $status = '<div class="max-lg:text-2xl text-4xl poppins-semibold tracking-wide text-center mb-2"><span>Failed!</span></div> <div class="text-center w-full max-md:text-sm">The name of the quiz can not be the same. Please try again!</div>';
     }
   }
+
+  include_once "../template/header.php";
+  include_once "../template/navbar.php";
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?= $title ?></title>
-
-  <link
-    rel="icon"
-    href="<?= $flaticon ?>"
-    type="image/x-icon"
-  />
-
-  <link rel="stylesheet" href="../output.css">
-  
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.4/dist/full.min.css" rel="stylesheet" type="text/css" />
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="w-full min-h-screen overflow-hidden flex justify-center">
+<body class="overflow-hidden flex justify-center">
   
   <main class="max-w-5xl w-full px-8 pt-48">
     <form action="post-quiz.php" method="post" class="w-full max-w-3xl flex justify-center gap-4 items-center mx-auto h-48 bg-base-300 rounded-box px-8">
@@ -54,7 +40,4 @@
     <div class="divider"></div>
     <?= $status ?>
   </main>
-
-  <?php include_once "./header.php" ?>
 </body>
-</html>

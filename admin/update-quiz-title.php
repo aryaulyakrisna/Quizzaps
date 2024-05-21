@@ -27,10 +27,10 @@ if (isset($_GET["quiz_id"]) && is_numeric((int)$_GET["quiz_id"]) && isset($_POST
   }
 
   catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
+    // echo "Error: " . $e->getMessage();
 
-    // header("Location: quiz.php?quiz_id=$quizID&status=failed");
-    // exit;
+    header("Location: quiz.php?quiz_id=$quizID&status=failed");
+    exit;
   }
 }
 

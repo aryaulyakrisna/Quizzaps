@@ -8,6 +8,7 @@
 
   $title = "Dashboard";
   $flaticon = "../assets/icons/flaticon.png";
+  $output = "../output.css";
 
   if (!isset($_GET["quiz_id"]) || !is_numeric((int)$_GET["quiz_id"])) {
 
@@ -46,28 +47,12 @@
     exit;
   }
 
+  include_once "../template/header.php";
+  include_once "../template/navbar.php";
+
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?= $title ?></title>
-
-  <link
-    rel="icon"
-    href="<?= $flaticon ?>"
-    type="image/x-icon"
-  />
-
-  <link rel="stylesheet" href="../output.css">
-  
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.4/dist/full.min.css" rel="stylesheet" type="text/css" />
-  <script src="https://cdn.tailwindcss.com"></script>
-
-</head>
-<body class="w-full min-h-screen overflow-x-hidden poppins-regular px-8 flex justify-center">
+<body class="overflow-x-hidden px-8 flex justify-center">
   
   <main class="max-w-3xl w-full flex-col pt-40">
     <div class="w-full">
@@ -196,8 +181,6 @@
       </div>
     </div>
   </main>
-
-  <?php include "header.php"?>  
   
   <script defer>
 
@@ -257,4 +240,3 @@
   </script>
   
 </body>
-</html>

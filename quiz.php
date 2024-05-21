@@ -2,12 +2,11 @@
 
   $title = "Quizzaps | Form";
   $flaticon = "./assets/icons/flaticon.png";
+  $output = "./output.css";
   $display = 0;
   
-  if (isset($_GET["quiz_id"])) {
-    if (is_int((int)$_GET["quiz_id"])) {
-      $quizID = (int)$_GET["quiz_id"];
-    }
+  if (isset($_GET["quiz_id"]) && is_int((int)$_GET["quiz_id"])) {
+    $quizID = (int)$_GET["quiz_id"];
   } else {
     header("Location: index.php");
     exit;
@@ -16,41 +15,30 @@
   try {
     include_once "db/config.php";
     $rowindex = 0;
-    $query = "SELECT soal, jawaban1, jawaban2, jawaban3 from tb_soal_" . $quizID;
-    $sql = mysqli_query($conn, $query) or die(mysqli_error($conn));
+    $query = "SELECT soal, jawaban1, jawaban2, jawaban3 from tb_soal WHERE id_kuis = ?";
+
+    $stmt = mysqli_prepare($conn, $query);
+    mysqli_stmt_bind_param($stmt, "i", $quizID);
+    mysqli_stmt_execute($stmt);
+
+    $sql = mysqli_stmt_get_result($stmt);
+    mysqli_stmt_close($stmt);
+
   } 
 
   catch (Exception $e) {
-    // echo "Error: " . $e->getMessage();
+    echo "Error: " . $e->getMessage();
 
-    header("Location: ./404.php");
-    exit;
+    // header("Location: ./404.php");
+    // exit;
   }
 
+  include_once "./template/header.php";
+  
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?= $title ?></title>
 
-  <link
-    rel="icon"
-    href="<?= $flaticon ?>"
-    type="image/x-icon"
-  />
-
-  <link rel="stylesheet" href="./output.css">
-
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.4/dist/full.min.css" rel="stylesheet" type="text/css" />
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <script defer src="./js/main.js"></script>
-
-</head>
-<body class="w-full min-h-screen flex justify-center items-center">
+<body class="flex justify-center items-center">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class=" fixed w-[120%] -bottom-[30%] max-lg:-bottom-[5%]"><path fill="#6A75F1" fill-opacity="1" d="M0,96L34.3,96C68.6,96,137,96,206,85.3C274.3,75,343,53,411,37.3C480,21,549,11,617,37.3C685.7,64,754,128,823,138.7C891.4,149,960,107,1029,85.3C1097.1,64,1166,64,1234,69.3C1302.9,75,1371,85,1406,90.7L1440,96L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z"></path></svg>
   <header class="lg:px-20 px-8 h-[100px] flex fixed top-0 w-full justify-between items-center max-lg:text-sm">
     <a href="./" class="text-nowrap"><span class="text-2xl  max-lg:text-lg text-[#6A75F1] mr-2 poppins-bold tracking-wide">Quizzaps</span> by Kelompok 4</a>
@@ -144,12 +132,25 @@
     </form>
   </main>
   
+  <script defer src="./js/main.js"></script>
   <script>
     letNextStep();
 
     document.getElementById("nama").addEventListener("keyup", letNextStep);
     document.getElementById("npm").addEventListener("keyup", letNextStep);
     document.getElementById("kelas").addEventListener("keyup", letNextStep);
+
+    document.getElementById("npm").addEventListener("input", () => {
+      if (document.getElementById("npm").value.length > 8 ) {
+        document.getElementById("npm").value = document.getElementById("npm").value.slice(0, 8);
+      }
+    })
+
+    document.getElementById("kelas").addEventListener("input", () => {
+      if (document.getElementById("kelas").value.length > 5 ) {
+        document.getElementById("kelas").value = document.getElementById("kelas").value.slice(0, 5);
+      }
+    })
 
     function letNextStep() {
       const nama = document.getElementById("nama")?.value.replace(/<\s*script\s*>|<\/\s*script\s*>|<\?php|<\?|\?>|<\?=|javascript:|"|'|`|/gi, '');
@@ -160,10 +161,20 @@
       document.getElementById("npm").value = npm;
       document.getElementById("kelas").value = kelas;
 
-      if (nama != " " && npm > 0 && kelas != " " && document.getElementById("nama").value && document.getElementById("npm").value && document.getElementById("kelas").value && document.getElementById("btn-next").hasAttribute("disabled")) {
+      if (
+      nama != " " 
+      && npm.length >= 7 
+      && kelas != " "
+      && kelas.length >= 4 
+      && document.getElementById("nama").value 
+      && document.getElementById("npm").value 
+      && document.getElementById("kelas").value 
+      && document.getElementById("btn-next").hasAttribute("disabled")) {
         document.getElementById("btn-next").removeAttribute("disabled");
-      } 
-    }
+      } else if (!document.getElementById("btn-next").hasAttribute("disabled")) {
+        document.getElementById("btn-next").setAttribute("disabled", "disabled");
+      }
+    } 
 
     // Set Atribute 'Checked' to input radio with just click its container
     const radioContainerEl = document.querySelectorAll("#radio-container");
@@ -181,4 +192,3 @@
     }
   </script>
 </body>
-</html>

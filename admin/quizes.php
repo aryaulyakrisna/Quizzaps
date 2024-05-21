@@ -9,6 +9,7 @@
   
   $title = "Quiz List";
   $flaticon = "../assets/icons/flaticon.png";
+  $output = "../output.css";
   
   try {
     include_once "../db/config.php";
@@ -21,28 +22,14 @@
     header("Location: 404.php");
     exit;
   }
+
+
+  include_once "../template/header.php";
+  include_once "../template/navbar.php";
+
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?= $title ?></title>
-
-  <link
-    rel="icon"
-    href="<?= $flaticon ?>"
-    type="image/x-icon"
-  />
-
-  <link rel="stylesheet" href="../output.css">
-  
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.4/dist/full.min.css" rel="stylesheet" type="text/css" />
-  <script src="https://cdn.tailwindcss.com"></script>
-
-</head>
-<body class="w-full min-h-screen overflow-hidden">
+<body class="overflow-hidden">
   
   <main class="max-w-3xl w-full flex flex-col gap-2 px-8 pt-36 mx-auto">
 
@@ -88,8 +75,4 @@
     <?php } ?>
   </main>
   
-  <?php include "header.php" ?>
-  <script>
-    </script>
 </body>
-</html>

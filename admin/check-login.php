@@ -5,53 +5,57 @@
     include_once "../db/config.php";
 
     if ($_POST["username"] && $_POST["password"]) {
-      $username = htmlspecialchars($_POST["username"]);
-      $username = htmlspecialchars($_POST["password"]);
+
+      $username = $_POST["username"];
+      $password = $_POST["password"];
+      $email = $_POST["username"];
 
       try {
-        $username = $_POST["username"];
-        $password = $_POST["password"];
 
-        $sql = "SELECT * FROM admin WHERE username = ?";
+        $sql = "SELECT * FROM tb_admin WHERE username = ? OR email = ?";
         $stmt = mysqli_prepare($conn, $sql);
         
-        mysqli_stmt_bind_param($stmt, "s", $username);
+        mysqli_stmt_bind_param($stmt, "ss", $username, $email);
         mysqli_stmt_execute($stmt);
         
         $res = mysqli_stmt_get_result($stmt);
 
-        if (mysqli_num_rows($res) == 1) {
+        if (mysqli_num_rows($res) > 0) {
 
             $row = mysqli_fetch_assoc($res);
 
-            $verifyPassword = password_verify($password, $row['password']);
+            $verifyPassword = password_verify($password, $row['psw']);
 
             if ($verifyPassword == 0) {
               header("Location: index.php?status=failed");
               exit;
             }
-
-            $_SESSION["user_id"] = $row["user_id"]; 
+            
+            $_SESSION["id_admin"] = $row["id_admin"];
             $_SESSION["username"] = $row["username"];
-            header("Location: dashboard.php");
-            exit;
-        } 
-        
-        else {
-          header("Location: index.php?status=failed");
-          exit;
-        }
-      } catch (Exception $e) {
-        header("Location: index.php?status=failed");
-        exit;
-      }
+            
+            echo $row["email"];
+            // header("Location: dashboard.php");
+            // exit;
+          } 
+          
+          // else {
+            //   header("Location: index.php?status=failed");
+            //   exit;
+            // }
 
-      finally {
         mysqli_close($conn);
+
+      } catch (Exception $e) {
+        echo $e->getMessage();
+
+        // header("Location: index.php?status=failed");
+        // exit;
       }
       
     } else {
-      header("Location: 404.php");
-      exit;
+      echo $e->getMessage();
+      // header("Location: 404.php");
+      // exit;
     }
   }
