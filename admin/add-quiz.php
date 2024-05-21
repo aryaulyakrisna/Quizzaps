@@ -27,7 +27,6 @@
   }
 
   include_once "../template/header.php";
-  include_once "../template/navbar.php";
 ?>
 
 <body class="overflow-hidden flex justify-center">
@@ -40,4 +39,7 @@
     <div class="divider"></div>
     <?= $status ?>
   </main>
+
+  <?php include_once "../template/navbar.php" ?> 
+
 </body>

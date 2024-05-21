@@ -27,7 +27,6 @@
 
 
   include_once "../template/header.php";
-  include_once "../template/navbar.php";
 
 ?>
 
@@ -76,5 +75,7 @@
       <div>Upps! There is no quiz yet! <a href="./add-quiz.php">Make Quiz</a></div>
     <?php } ?>
   </main>
-  
+
+  <?php include_once "../template/navbar.php" ?> 
+
 </body>

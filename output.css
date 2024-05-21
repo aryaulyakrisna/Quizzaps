@@ -8591,8 +8591,8 @@ html:has(.drawer-open.drawer-open) {
   bottom: -20%;
 }
 
-.-bottom-\[27\.5\%\] {
-  bottom: -27.5%;
+.-bottom-\[25\%\] {
+  bottom: -25%;
 }
 
 .-bottom-\[30\%\] {
@@ -8621,14 +8621,6 @@ html:has(.drawer-open.drawer-open) {
 
 .top-0 {
   top: 0px;
-}
-
-.-bottom-\[25\%\] {
-  bottom: -25%;
-}
-
-.-bottom-\[27\%\] {
-  bottom: -27%;
 }
 
 .isolate {
@@ -11238,12 +11230,8 @@ body {
 }
 
 @media (min-width: 1536px) {
-  .\32xl\:bottom-\[10\%\] {
-    bottom: 10%;
-  }
-
-  .\32xl\:-bottom-\[30\%\] {
-    bottom: -30%;
+  .\32xl\:bottom-\[5\%\] {
+    bottom: 5%;
   }
 }
 

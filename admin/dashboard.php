@@ -34,8 +34,6 @@
   }
 
   include_once "../template/header.php";
-  include_once "../template/navbar.php";
-
 
 ?>
 <body class="overflow-hidden px-4">
@@ -63,5 +61,7 @@
 
     </div>
   </main>
+
+  <?php include_once "../template/navbar.php" ?> 
   
 </body>

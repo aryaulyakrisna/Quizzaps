@@ -48,7 +48,6 @@
   }
 
   include_once "../template/header.php";
-  include_once "../template/navbar.php";
 
 ?>
 
@@ -181,6 +180,8 @@
       </div>
     </div>
   </main>
+
+  <?php include_once "../template/navbar.php" ?> 
   
   <script defer>
 
