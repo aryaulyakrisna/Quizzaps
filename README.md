@@ -39,6 +39,8 @@
 
 - Run Apache and MySql, then import the quizzaps.sql file
 
-  - Existing admin username = kel4pbo, password = kel4PboOk
+  - Existing admin username = kel4pbo
+  - email = kel4pbo@gmail.com
+  - password = kel4PboOk
 
 - Go to http://localhost/kel4-pbo
