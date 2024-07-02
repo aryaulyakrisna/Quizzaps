@@ -160,6 +160,9 @@
         console.log("hehehe")
         document.getElementById("npm").value = npm.slice(0, 8);
         document.getElementById("kelas").value = kelas.slice(0, 5);
+      } else if (document.getElementById("kelas").value.length < 5 || document.getElementById("npm").value.length < 8) {
+        console.log("hehehe")
+        document.getElementById("btn-next").setAttribute("disabled", "disabled");
       }
     } 
 
