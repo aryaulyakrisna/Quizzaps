@@ -19,6 +19,5 @@ include_once "./template/header.php";
   <script src="./js/style.js"></script>
   <script>
     setIntersection();
-    console.log(setIntersection);
   </script>
 </body>

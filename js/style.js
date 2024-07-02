@@ -18,8 +18,11 @@ function landingPageImgIntersection() {
 
           document
             .querySelector("#landing-page-img")
-            .classList.remove("lg:-translate-x-10", "lg:translate-y-10");
+            .classList.remove("lg:-translate-x-10", "lg:translate-y-20");
         }
+          document
+            .querySelector("#landing-page-img")
+            .classList.add("lg:translate-y-10");
         }
     });
   });

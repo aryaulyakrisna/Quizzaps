@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 21, 2024 at 03:49 PM
+-- Generation Time: Jul 02, 2024 at 08:00 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -63,7 +63,7 @@ CREATE TABLE `tb_hasil` (
 --
 
 INSERT INTO `tb_hasil` (`id_hasil`, `id_kuis`, `npm`, `nama`, `kelas`, `jumlah_benar`, `jumlah_salah`, `skor`) VALUES
-(4, 7, 50422280, 'Arya Ulya Krisna', 2, 5, 0, 100);
+(8, 7, 50422280, 'Arya Ulya Krisna', 2, 4, 1, 80);
 
 -- --------------------------------------------------------
 
@@ -142,14 +142,15 @@ INSERT INTO `tb_soal` (`id_soal`, `id_kuis`, `soal`, `jawaban1`, `jawaban2`, `ja
 --
 ALTER TABLE `tb_admin`
   ADD PRIMARY KEY (`id_admin`),
-  ADD UNIQUE KEY `username` (`username`,`email`);
+  ADD UNIQUE KEY `username` (`username`,`email`),
+  ADD UNIQUE KEY `username_2` (`username`),
+  ADD UNIQUE KEY `username_3` (`username`,`email`);
 
 --
 -- Indexes for table `tb_hasil`
 --
 ALTER TABLE `tb_hasil`
-  ADD PRIMARY KEY (`id_hasil`),
-  ADD UNIQUE KEY `npm` (`npm`);
+  ADD PRIMARY KEY (`id_hasil`);
 
 --
 -- Indexes for table `tb_kuis`
@@ -178,19 +179,19 @@ ALTER TABLE `tb_admin`
 -- AUTO_INCREMENT for table `tb_hasil`
 --
 ALTER TABLE `tb_hasil`
-  MODIFY `id_hasil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_hasil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tb_kuis`
 --
 ALTER TABLE `tb_kuis`
-  MODIFY `id_kuis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_kuis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tb_soal`
 --
 ALTER TABLE `tb_soal`
-  MODIFY `id_soal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id_soal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
